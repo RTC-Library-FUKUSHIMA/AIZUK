@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<rtc:RtcProfile rtc:version="0.2" rtc:id="RTC:AIZUK:Sensor:RTC_IMU_GX5_25:1.0.0" xmlns:rtc="http://www.openrtp.org/namespaces/rtc" xmlns:rtcExt="http://www.openrtp.org/namespaces/rtc_ext" xmlns:rtcDoc="http://www.openrtp.org/namespaces/rtc_doc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <rtc:BasicInfo xsi:type="rtcExt:basic_info_ext" rtcExt:saveProject="RTC_IMU_GX5_25" rtc:updateDate="2020-02-05T18:52:29+09:00" rtc:creationDate="2020-02-05T18:52:29+09:00" rtc:version="1.0.0" rtc:vendor="AIZUK" rtc:maxInstances="1" rtc:executionType="PeriodicExecutionContext" rtc:executionRate="50.0" rtc:description="LORD製の3DM-GX5-25から姿勢情報を取得する" rtc:category="Sensor" rtc:componentKind="DataFlowComponent" rtc:activityType="PERIODIC" rtc:componentType="STATIC" rtc:name="RTC_IMU_GX5_25">
+        <rtcExt:VersionUpLogs></rtcExt:VersionUpLogs>
+    </rtc:BasicInfo>
+    <rtc:Actions>
+        <rtc:OnInitialize xsi:type="rtcDoc:action_status_doc" rtc:implemented="true"/>
+        <rtc:OnFinalize xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnStartup xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnShutdown xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnActivated xsi:type="rtcDoc:action_status_doc" rtc:implemented="true"/>
+        <rtc:OnDeactivated xsi:type="rtcDoc:action_status_doc" rtc:implemented="true"/>
+        <rtc:OnAborting xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnError xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnReset xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnExecute xsi:type="rtcDoc:action_status_doc" rtc:implemented="true"/>
+        <rtc:OnStateUpdate xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnRateChanged xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnAction xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnModeChanged xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+    </rtc:Actions>
+    <rtc:ConfigurationSet>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="/dev/ttyACM0" rtc:type="string" rtc:name="DEVICE_NAME">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="3DM-GX5-25のデバイス名" rtcDoc:defaultValue="/dev/ttyACM0" rtcDoc:dataname="デバイス名"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="[deg]" rtc:defaultValue="0.0" rtc:type="double" rtc:name="X_ROTATION">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="[deg]" rtcDoc:description="IMUの座標系をロボットの座標系に合わせるための回転量" rtcDoc:defaultValue="0.0" rtcDoc:dataname="X軸の回転"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="[deg]" rtc:defaultValue="0.0" rtc:type="double" rtc:name="Y_ROTATION">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="[deg]" rtcDoc:description="IMUの座標系をロボットの座標系に合わせるための回転量" rtcDoc:defaultValue="0.0" rtcDoc:dataname="Y軸の回転"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="[deg]" rtc:defaultValue="0.0" rtc:type="double" rtc:name="Z_ROTATION">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="[deg]" rtcDoc:description="IMUの座標系をロボットの座標系に合わせるための回転量" rtcDoc:defaultValue="0.0" rtcDoc:dataname="Z軸の回転"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+    </rtc:ConfigurationSet>
+    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtcExt:position="LEFT" rtcExt:variableName="" rtc:unit="" rtc:subscriptionType="" rtc:dataflowType="" rtc:interfaceType="" rtc:idlFile="/usr/local/include/openrtm-1.2/rtm/idl/BasicDataType.idl" rtc:type="RTC::TimedLong" rtc:name="ResetFilter" rtc:portType="DataInPort">
+        <rtcDoc:Doc rtcDoc:operation="" rtcDoc:occerrence="" rtcDoc:unit="" rtcDoc:semantics="0: リセットしない&lt;br/&gt;1: リセットする" rtcDoc:number="1" rtcDoc:type="TimedLong" rtcDoc:description="フィルタをリセットする"/>
+    </rtc:DataPorts>
+    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtcExt:position="RIGHT" rtcExt:variableName="" rtc:unit="" rtc:subscriptionType="" rtc:dataflowType="" rtc:interfaceType="" rtc:idlFile="/usr/local/include/openrtm-1.2/rtm/idl/ExtendedDataTypes.idl" rtc:type="RTC::TimedAcceleration3D" rtc:name="Acceleration3D_Out" rtc:portType="DataOutPort">
+        <rtcDoc:Doc rtcDoc:operation="" rtcDoc:occerrence="" rtcDoc:unit="[m/s^2]" rtcDoc:semantics="" rtcDoc:number="1" rtcDoc:type="TimedAcceleration3D" rtcDoc:description="ロボットの座標系に合わせた３軸の加速度"/>
+    </rtc:DataPorts>
+    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtcExt:position="RIGHT" rtcExt:variableName="" rtc:unit="" rtc:subscriptionType="" rtc:dataflowType="" rtc:interfaceType="" rtc:idlFile="/usr/local/include/openrtm-1.2/rtm/idl/ExtendedDataTypes.idl" rtc:type="RTC::TimedOrientation3D" rtc:name="Orientation3D_Out" rtc:portType="DataOutPort">
+        <rtcDoc:Doc rtcDoc:operation="" rtcDoc:occerrence="" rtcDoc:unit="[rad]" rtcDoc:semantics="" rtcDoc:number="1" rtcDoc:type="TimedOrientation3D" rtcDoc:description="ロボットの座標系に合わせた３次元の姿勢"/>
+    </rtc:DataPorts>
+    <rtc:Language xsi:type="rtcExt:language_ext" rtc:kind="C++">
+        <rtcExt:targets rtcExt:os="Ubuntu" rtcExt:langVersion="18.04">
+            <rtcExt:libraries rtcExt:other="" rtcExt:version="1.2.1" rtcExt:name="OpenRTM-aist(C++)"/>
+            <rtcExt:libraries rtcExt:other="" rtcExt:version="52.2.1" rtcExt:name="MSCL"/>
+            <rtcExt:libraries rtcExt:other="" rtcExt:version="1.68" rtcExt:name="boost"/>
+            <rtcExt:libraries rtcExt:other="" rtcExt:version="3.0.6" rtcExt:name="swig"/>
+            <rtcExt:libraries rtcExt:other="" rtcExt:version="0.29.1" rtcExt:name="eigen3"/>
+        </rtcExt:targets>
+    </rtc:Language>
+</rtc:RtcProfile>
