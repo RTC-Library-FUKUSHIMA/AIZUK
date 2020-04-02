@@ -1,0 +1,9 @@
+{
+    "name": "Giraffe Viewer",
+    "short_name": "Giraffe View",
+    "description": "Giraffe Information Viewer",
+    "start_url": "/GiraffeViewer/",
+    "lang": "ja-jp",
+    "display": "standalone",
+    "orientation": "landscape"
+}

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<rtc:RtcProfile rtc:version="0.2" rtc:id="RTC:AIZUK:Viewer:RTC_Spider2020_Info:1.0.0" xmlns:rtc="http://www.openrtp.org/namespaces/rtc" xmlns:rtcExt="http://www.openrtp.org/namespaces/rtc_ext" xmlns:rtcDoc="http://www.openrtp.org/namespaces/rtc_doc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <rtc:BasicInfo xsi:type="rtcExt:basic_info_ext" rtcExt:saveProject="RTC_Spider2020_Info" rtc:updateDate="2020-01-14T14:36:53+09:00" rtc:creationDate="2019-09-16T17:01:38+09:00" rtc:version="1.0.0" rtc:vendor="AIZUK" rtc:maxInstances="1" rtc:executionType="PeriodicExecutionContext" rtc:executionRate="10.0" rtc:description="Spider2020ビューア用のWebSocketサーバRTC" rtc:category="Viewer" rtc:componentKind="DataFlowComponent" rtc:activityType="PERIODIC" rtc:componentType="STATIC" rtc:name="RTC_Spider2020_Info">
+        <rtcExt:VersionUpLogs></rtcExt:VersionUpLogs>
+        <rtcExt:VersionUpLogs></rtcExt:VersionUpLogs>
+        <rtcExt:VersionUpLogs></rtcExt:VersionUpLogs>
+    </rtc:BasicInfo>
+    <rtc:Actions>
+        <rtc:OnInitialize xsi:type="rtcDoc:action_status_doc" rtc:implemented="true"/>
+        <rtc:OnFinalize xsi:type="rtcDoc:action_status_doc" rtc:implemented="true"/>
+        <rtc:OnStartup xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnShutdown xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnActivated xsi:type="rtcDoc:action_status_doc" rtc:implemented="true"/>
+        <rtc:OnDeactivated xsi:type="rtcDoc:action_status_doc" rtc:implemented="true"/>
+        <rtc:OnAborting xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnError xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnReset xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnExecute xsi:type="rtcDoc:action_status_doc" rtc:implemented="true"/>
+        <rtc:OnStateUpdate xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnRateChanged xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnAction xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnModeChanged xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+    </rtc:Actions>
+    <rtc:ConfigurationSet>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="8080" rtc:type="int" rtc:name="WEBSOCKET_PORT">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="WebSocket 待受ポート番号" rtcDoc:defaultValue="" rtcDoc:dataname=""/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="0.0.0.0" rtc:type="string" rtc:name="WEBSOCKET_HOST">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="WebSocket 待受アドレス" rtcDoc:defaultValue="" rtcDoc:dataname=""/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+    </rtc:ConfigurationSet>
+    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtcExt:position="LEFT" rtcExt:variableName="" rtc:unit="" rtc:subscriptionType="" rtc:dataflowType="" rtc:interfaceType="" rtc:idlFile="/usr/include/openrtm-1.2/rtm/idl/BasicDataType.idl" rtc:type="RTC::TimedDouble" rtc:name="GCCapacityRatio_In" rtc:portType="DataInPort">
+        <rtcDoc:Doc rtcDoc:operation="" rtcDoc:occerrence="" rtcDoc:unit="[%]" rtcDoc:semantics="" rtcDoc:number="" rtcDoc:type="" rtcDoc:description="ゲームコントローラのバッテリ残容量比"/>
+    </rtc:DataPorts>
+    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtcExt:position="LEFT" rtcExt:variableName="" rtc:unit="" rtc:subscriptionType="" rtc:dataflowType="" rtc:interfaceType="" rtc:idlFile="/usr/include/openrtm-1.2/rtm/idl/BasicDataType.idl" rtc:type="RTC::TimedDouble" rtc:name="MainCapacityRatio_In" rtc:portType="DataInPort">
+        <rtcDoc:Doc rtcDoc:operation="" rtcDoc:occerrence="" rtcDoc:unit="[%]" rtcDoc:semantics="" rtcDoc:number="" rtcDoc:type="" rtcDoc:description="メインバッテリのバッテリ残容量比"/>
+    </rtc:DataPorts>
+    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtcExt:position="LEFT" rtcExt:variableName="" rtc:unit="" rtc:subscriptionType="" rtc:dataflowType="" rtc:interfaceType="" rtc:idlFile="/usr/include/openrtm-1.2/rtm/idl/BasicDataType.idl" rtc:type="RTC::TimedLongSeq" rtc:name="Mode_In" rtc:portType="DataInPort">
+        <rtcDoc:Doc rtcDoc:operation="" rtcDoc:occerrence="" rtcDoc:unit="" rtcDoc:semantics="[0]: 操作モード&lt;br/&gt;[1]: 走行操作 速度レベル&lt;br/&gt;[2]: 走行操作 最大速度フラグ  &lt;br/&gt;[3]: 走行モード フリッパーの選択状態&lt;br/&gt;[4]: 走行モード フリッパーの動作状態&lt;br/&gt;[5]: 走行モード 台車の位置姿勢のクリア" rtcDoc:number="6" rtcDoc:type="" rtcDoc:description="動作指令の状態"/>
+    </rtc:DataPorts>
+    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtcExt:position="LEFT" rtcExt:variableName="" rtc:unit="" rtc:subscriptionType="" rtc:dataflowType="" rtc:interfaceType="" rtc:idlFile="/usr/include/openrtm-1.2/rtm/idl/ExtendedDataTypes.idl" rtc:type="RTC::TimedPose3D" rtc:name="Pose3D_In" rtc:portType="DataInPort">
+        <rtcDoc:Doc rtcDoc:operation="" rtcDoc:occerrence="" rtcDoc:unit="位置:[m], 姿勢:[rad]" rtcDoc:semantics="" rtcDoc:number="" rtcDoc:type="" rtcDoc:description="３次元の位置・姿勢"/>
+    </rtc:DataPorts>
+    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtcExt:position="LEFT" rtcExt:variableName="" rtc:unit="" rtc:subscriptionType="" rtc:dataflowType="" rtc:interfaceType="" rtc:idlFile="/usr/include/openrtm-1.2/rtm/idl/ExtendedDataTypes.idl" rtc:type="RTC::TimedVelocity2D" rtc:name="Velocity2D_In" rtc:portType="DataInPort">
+        <rtcDoc:Doc rtcDoc:operation="" rtcDoc:occerrence="" rtcDoc:unit="[m/s]" rtcDoc:semantics="" rtcDoc:number="" rtcDoc:type="" rtcDoc:description="メインクローラの速度"/>
+    </rtc:DataPorts>
+    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtcExt:position="LEFT" rtcExt:variableName="" rtc:unit="" rtc:subscriptionType="" rtc:dataflowType="" rtc:interfaceType="" rtc:idlFile="/usr/include/openrtm-1.2/rtm/idl/BasicDataType.idl" rtc:type="RTC::TimedDoubleSeq" rtc:name="FlipperAngle_In" rtc:portType="DataInPort">
+        <rtcDoc:Doc rtcDoc:operation="" rtcDoc:occerrence="" rtcDoc:unit="[rad]" rtcDoc:semantics="[0]: 右前方フリッパー&lt;br/&gt;[1]: 左前方フリッパー&lt;br/&gt;[2]: 右後方フリッパー&lt;br/&gt;[3]: 左後方フリッパー" rtcDoc:number="4" rtcDoc:type="" rtcDoc:description="フリッパーの角度"/>
+    </rtc:DataPorts>
+    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtcExt:position="LEFT" rtcExt:variableName="" rtc:unit="" rtc:subscriptionType="" rtc:dataflowType="" rtc:interfaceType="" rtc:idlFile="/usr/include/openrtm-1.2/rtm/idl/BasicDataType.idl" rtc:type="RTC::TimedDoubleSeq" rtc:name="MotorLoad_In" rtc:portType="DataInPort">
+        <rtcDoc:Doc rtcDoc:operation="" rtcDoc:occerrence="" rtcDoc:unit="[A]" rtcDoc:semantics="[0]: 右メインモータ&lt;br/&gt;[1]: 左メインモータ&lt;br/&gt;[2]: 右前方サブモータ&lt;br/&gt;[3]: 左前方サブモータ&lt;br/&gt;[4]: 右後方サブモータ&lt;br/&gt;[5]: 左後方サブモータ" rtcDoc:number="6" rtcDoc:type="" rtcDoc:description="モータの負荷"/>
+    </rtc:DataPorts>
+    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtcExt:position="LEFT" rtcExt:variableName="" rtc:unit="" rtc:subscriptionType="" rtc:dataflowType="" rtc:interfaceType="" rtc:idlFile="/usr/include/openrtm-1.2/rtm/idl/ExtendedDataTypes.idl" rtc:type="RTC::TimedPose3D" rtc:name="Arm1Pose3D_In" rtc:portType="DataInPort">
+        <rtcDoc:Doc rtcDoc:operation="" rtcDoc:occerrence="" rtcDoc:unit="位置:[m], 姿勢:[rad]" rtcDoc:semantics="" rtcDoc:number="" rtcDoc:type="" rtcDoc:description="アーム1の３次元の位置・姿勢&lt;br/&gt;(ロボット座標系)"/>
+    </rtc:DataPorts>
+    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtcExt:position="LEFT" rtcExt:variableName="" rtc:unit="" rtc:subscriptionType="" rtc:dataflowType="" rtc:interfaceType="" rtc:idlFile="/usr/include/openrtm-1.2/rtm/idl/BasicDataType.idl" rtc:type="RTC::TimedDoubleSeq" rtc:name="Arm1Angular_In" rtc:portType="DataInPort">
+        <rtcDoc:Doc rtcDoc:operation="" rtcDoc:occerrence="" rtcDoc:unit="[rad]" rtcDoc:semantics="[0]: 1軸目&lt;br/&gt;[1]: 2軸目&lt;br/&gt;[2]: 3軸目&lt;br/&gt;[3]: 4軸目&lt;br/&gt;[4]: 5軸目&lt;br/&gt;[5]: 6軸目" rtcDoc:number="" rtcDoc:type="" rtcDoc:description="アーム1の腕の角度"/>
+    </rtc:DataPorts>
+    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtcExt:position="LEFT" rtcExt:variableName="" rtc:unit="" rtc:subscriptionType="" rtc:dataflowType="" rtc:interfaceType="" rtc:idlFile="/usr/include/openrtm-1.2/rtm/idl/BasicDataType.idl" rtc:type="RTC::TimedLongSeq" rtc:name="Arm1Finger_In" rtc:portType="DataInPort">
+        <rtcDoc:Doc rtcDoc:operation="" rtcDoc:occerrence="" rtcDoc:unit="[u] (独自単位)" rtcDoc:semantics="[0]: 親指&lt;br/&gt;[1]: 差指&lt;br/&gt;[2]: 中指" rtcDoc:number="" rtcDoc:type="" rtcDoc:description="アーム1の指の開閉具合"/>
+    </rtc:DataPorts>
+    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtcExt:position="LEFT" rtcExt:variableName="" rtc:unit="" rtc:subscriptionType="" rtc:dataflowType="" rtc:interfaceType="" rtc:idlFile="/usr/include/openrtm-1.2/rtm/idl/BasicDataType.idl" rtc:type="RTC::TimedDoubleSeq" rtc:name="Arm1Current_In" rtc:portType="DataInPort">
+        <rtcDoc:Doc rtcDoc:operation="" rtcDoc:occerrence="" rtcDoc:unit="[A]" rtcDoc:semantics="[0]: 1軸目&lt;br/&gt;[1]: 2軸目&lt;br/&gt;[2]: 3軸目&lt;br/&gt;[3]: 4軸目&lt;br/&gt;[4]: 5軸目&lt;br/&gt;[5]: 6軸目&lt;br/&gt;[6]: 親指&lt;br/&gt;[7]: 差指&lt;br/&gt;[8]: 中指" rtcDoc:number="" rtcDoc:type="" rtcDoc:description="アーム1のモータ負荷"/>
+    </rtc:DataPorts>
+    <rtc:Language xsi:type="rtcExt:language_ext" rtc:kind="Python"/>
+</rtc:RtcProfile>

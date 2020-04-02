@@ -1,0 +1,33 @@
+.batteryFill {
+    border-radius: 10px;
+    position: relative;
+    height: 50px;
+}
+
+.batteryBody {
+    border: 4px solid #888;
+    border-radius: 15px;
+    padding: 5px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.batteryTerminal {
+    width: 0px;
+    background-color: #888;
+    border: 5px solid #888;
+    border-radius: 0 10px 10px 0;
+    height: 20px;
+    display: inline-block;
+    margin-left: 5px;
+    vertical-align: middle;
+} 
+
+.batteryText {
+    font-size: 25px;
+    font-family: sans-serif;
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    top: 25%;
+}

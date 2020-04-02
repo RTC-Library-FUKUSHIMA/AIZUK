@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Spider2020 Viewer</title>
+<meta http-equiv="Content-Type" charset="utf-8">
+<meta http-equiv="Cache-Control" content="no-cache">
+<link rel="manifest" href="manifest.json">
+
+<script src="js/jquery-3.4.1.min.js"></script>
+<script src="js/jquery.sprintf.js"></script>
+<script src="js/gauge.min.js"></script>
+
+<script src="js/jquery.battery.js"></script>
+<link rel="stylesheet" type="text/css" href="css/jquery.battery.css">
+
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/spider2020.css">
+
+<script>
+var viewer;
+
+(async () => {
+	const Viewer = (await import("./js/spider2020_viewer.js")).Spider2020Viewer;
+	try {
+		Object.assign(Viewer, await $.getJSON("./config.rtc.json"));
+		Object.assign(Viewer, await $.getJSON("./config.json"));
+	}
+	catch(error) {
+		console.log(error);
+	}
+	viewer = new Viewer();
+
+	$(() => {
+		viewer.initializePanels();
+		viewer.setScreenZoom();
+		viewer.setEventHandlers();
+		viewer.start();
+	});
+})();
+</script>
+
+</head>
+
+<body>
+
+<div class="title flexbox">
+	<h1>Spider2020 Viewer</h1>
+	<div id="message"></div>
+</div>
+
+<div class="content">
+
+<div id="loading">
+	<img src="icon/loading.png">
+</div>
+
+<!-- ### MainCapacityRatio & GCCapacityRatio ### -->
+
+<div id="CapacityRatio" class="panel low-height">
+
+	<h3>バッテリー残量</h3>
+
+	<div class="flexbox">
+
+		<div class="capacity">
+			<div class="battery Main"></div>
+			<h4>メイン</h4>
+		</div>
+
+		<div class="capacity">
+			<div class="battery GC"></div>
+			<h4>コントローラー</h4>
+		</div>
+
+	</div>
+
+</div>
+
+<!-- ### Mode ### -->
+
+<div id="Mode" class="panel low-height">
+
+	<h3>動作指令状態</h3>
+
+	<table class="mode">
+		<tr class="operation"  ><th>操作モード        </th><td>走行</td><td>アーム</td></tr>
+		<tr class="speed-level"><th>走行速度レベル    </th><td>低速</td><td>中速  </td><td>高速</td></tr>
+		<tr class="speed-max"  ><th>最大速度走行フラグ</th><td>オフ</td><td>オン  </td></tr>
+	</table>
+	
+</div>
+	
+<!-- ### MotorLoad ### -->
+
+<div id="MotorLoad" class="panel low-height">
+
+	<h3>モーター負荷</h3>
+
+	<div class="flexbox">
+
+		<div class="load left box">
+			<h4>左</h4>
+			<table>
+				<tr><td>メイン  </td><td><span class="data main" ></span>[A]</td></tr>
+				<tr><td>前方サブ</td><td><span class="data front"></span>[A]</td></tr>
+				<tr><td>後方サブ</td><td><span class="data rear "></span>[A]</td></tr>
+			</table>
+		</div>
+	
+		<div class="load right box">
+			<h4>右</h4>
+			<table>
+				<tr><td>メイン  </td><td><span class="data main" ></span>[A]</td></tr>
+				<tr><td>前方サブ</td><td><span class="data front"></span>[A]</td></tr>
+				<tr><td>後方サブ</td><td><span class="data rear "></span>[A]</td></tr>
+			</table>
+		</div>
+	
+	</div>
+	
+</div>
+
+<!-- ### Pose3D ### -->
+
+<div id="Pose3D" class="panel">
+
+	<h3>台車位置姿勢</h3>
+
+	<table class="position">
+		<tr><td>X</td><td><span class="data x"></span>[m]</td></tr>
+		<tr><td>Y</td><td><span class="data y"></span>[m]</td></tr>
+		<tr><td>Z</td><td><span class="data z"></span>[m]</td></tr>
+	</table>
+
+	<div class="flexbox">
+
+		<div class="orientation r box">
+			<h4>ロール</h4>
+			<span class="data"></span>[deg]<br>
+			<img src="icon/pose3d-roll.png" >
+		</div>
+
+		<div class="orientation p box">
+			<h4>ピッチ</h4>
+			<span class="data"></span>[deg]<br>
+			<img src="icon/pose3d-pitch.png">
+		</div>
+
+		<div class="orientation y box">
+			<h4>ヨー</h4>
+			<span class="data"></span>[deg]<br>
+			<img src="icon/pose3d-yaw.png"  >
+		</div>
+
+	</div>
+
+</div>
+
+<!-- ### Velocity2D ### -->
+
+<div id="Velocity2D" class="panel">
+
+	<h3>メインクローラー速度</h3>
+
+	<div class="flexbox">
+
+		<div class="velocity">
+			<canvas class="vx"></canvas>
+			<h4>並進速度 [m/s]</h4>
+		</div>
+
+		<div class="velocity">
+			<canvas class="va"></canvas>
+			<h4>旋回速度 [deg/s]</h4>
+		</div>
+
+	</div>
+
+</div>
+
+<!-- ### FlipperAngle ### -->
+
+<div id="FlipperAngle" class="panel">
+
+	<h3>フリッパー状態</h3>
+
+	<div class="flexbox">
+
+		<div class="angle left box">
+			<h4>左</h4>
+			<table>
+				<tr><td>前方</td><td><span class="data front"></span>[deg]</td></tr>
+				<tr><td>後方</td><td><span class="data rear "></span>[deg]</td></tr>
+			</table>
+			<div class="image">
+				<img class="flipper front" src="icon/flipper-left.png">
+				<img class="body"          src="icon/body-left.png">
+				<img class="flipper rear"  src="icon/flipper-right.png">
+			</div>
+		</div>
+
+		<div class="angle right box">
+			<h4>右</h4>
+			<table class="angle">
+				<tr><td>前方</td><td><span class="data front"></span>[deg]</td></tr>
+				<tr><td>後方</td><td><span class="data rear "></span>[deg]</td></tr>
+			</table>
+			<div class="image">
+				<img class="flipper rear"  src="icon/flipper-left.png">
+				<img class="body"          src="icon/body-right.png">
+				<img class="flipper front" src="icon/flipper-right.png">
+			</div>
+		</div>
+
+		<div class="status box">
+			<h4>状態</h4>
+			<dl>
+				<dt>非選択</dt>
+				<dd><img class=""         src="icon/flipper-left.png"></dd>
+				<dt>選択</dt>
+				<dd><img class="selected" src="icon/flipper-left.png"></dd>
+				<dt>上昇</dt>
+				<dd><img class="up"       src="icon/flipper-left.png"></dd>
+				<dt>下降</dt>
+				<dd><img class="down"     src="icon/flipper-left.png"></dd>
+			</dl>
+		</div>
+
+	</div>
+
+</div>
+
+<!-- ### Arm1Pose3D ### -->
+
+<div id="Arm1Pose3D" class="panel middle-height">
+
+	<h3>アーム1 位置姿勢</h3>
+
+	<table class="position">
+		<tr><td>X</td><td><span class="data x"></span>[m]</td></tr>
+		<tr><td>Y</td><td><span class="data y"></span>[m]</td></tr>
+		<tr><td>Z</td><td><span class="data z"></span>[m]</td></tr>
+	</table>
+
+	<div class="flexbox">
+
+		<div class="orientation r box">
+			<h4>ロール</h4>
+			<span class="data"></span>[deg]<br>
+		</div>
+
+		<div class="orientation p box">
+			<h4>ピッチ</h4>
+			<span class="data"></span>[deg]<br>
+		</div>
+
+		<div class="orientation y box">
+			<h4>ヨー</h4>
+			<span class="data"></span>[deg]<br>
+		</div>
+
+	</div>
+
+</div>
+
+<!-- ### Arm1Angular ### -->
+
+<div id="Arm1Angular" class="panel middle-height">
+
+	<h3>アーム1 腕の角度・指の開閉具合</h3>
+
+	<div class="flexbox">
+
+		<div class="angular arm box">
+			<h4>腕の角度</h4>
+			<table>
+				<tr><td>1軸目</td><td><span class="data axis1"></span>[deg]</td></tr>
+				<tr><td>2軸目</td><td><span class="data axis2"></span>[deg]</td></tr>
+				<tr><td>3軸目</td><td><span class="data axis3"></span>[deg]</td></tr>
+				<tr><td>4軸目</td><td><span class="data axis4"></span>[deg]</td></tr>
+				<tr><td>5軸目</td><td><span class="data axis5"></span>[deg]</td></tr>
+				<tr><td>6軸目</td><td><span class="data axis6"></span>[deg]</td></tr>
+			</table>
+		</div>
+
+		<div class="angular finger box">
+			<h4>指の開閉具合</h4>
+			<table>
+				<tr><td>親指</td><td><span class="data finger1"></span>[u]</td></tr>
+				<tr><td>差指</td><td><span class="data finger2"></span>[u]</td></tr>
+				<tr><td>中指</td><td><span class="data finger3"></span>[u]</td></tr>
+			</table>
+		</div>
+
+	</div>
+	
+</div>
+
+<!-- ### Arm1Current ### -->
+
+<div id="Arm1Current" class="panel">
+
+		<h3>アーム1 モーター負荷</h3>
+	
+		<div class="flexbox">
+	
+			<div class="current arm box">
+				<h4>腕</h4>
+				<table>
+					<tr><td>1軸目</td><td><span class="data current1"></span>[A]</td></tr>
+					<tr><td>2軸目</td><td><span class="data current2"></span>[A]</td></tr>
+					<tr><td>3軸目</td><td><span class="data current3"></span>[A]</td></tr>
+					<tr><td>4軸目</td><td><span class="data current4"></span>[A]</td></tr>
+					<tr><td>5軸目</td><td><span class="data current5"></span>[A]</td></tr>
+					<tr><td>6軸目</td><td><span class="data current6"></span>[A]</td></tr>
+				</table>
+			</div>
+	
+			<div class="current finger box">
+				<h4>指</h4>
+				<table>
+					<tr><td>親指</td><td><span class="data current7"></span>[A]</td></tr>
+					<tr><td>差指</td><td><span class="data current8"></span>[A]</td></tr>
+					<tr><td>中指</td><td><span class="data current9"></span>[A]</td></tr>
+				</table>
+			</div>
+	
+		</div>
+		
+	</div>
+	
+	</div> <!-- content -->
+
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+#Arm1Pose3D table.position {
+    width: 100%;
+}
+
+#Arm1Pose3D table.position tbody {
+    display: flex;
+    justify-content: space-around;
+}
+
+#Arm1Pose3D table.position .data {
+    width: 90px;
+}
+
+#Arm1Pose3D .orientation {
+    text-align: center;
+    flex-basis: 33%;
+    padding-bottom: 15px;
+}
+
+#Arm1Pose3D .orientation .data {
+    margin-right: 5px;
+}
+
+#Arm1Angular {
+}
+
+#Arm1Current {
+}
