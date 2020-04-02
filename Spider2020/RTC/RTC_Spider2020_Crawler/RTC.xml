@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<rtc:RtcProfile rtc:version="0.2" rtc:id="RTC:AIZUK:Controller:RTC_Spider2020_Crawler:2.0.0" xmlns:rtc="http://www.openrtp.org/namespaces/rtc" xmlns:rtcExt="http://www.openrtp.org/namespaces/rtc_ext" xmlns:rtcDoc="http://www.openrtp.org/namespaces/rtc_doc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <rtc:BasicInfo xsi:type="rtcExt:basic_info_ext" rtcExt:saveProject="RTC_Spider2020_Crawler" rtc:updateDate="2019-06-21T10:54:07+09:00" rtc:creationDate="2019-05-23T11:45:30+09:00" rtc:version="2.0.0" rtc:vendor="AIZUK" rtc:maxInstances="1" rtc:executionType="PeriodicExecutionContext" rtc:executionRate="20.0" rtc:description="Spider2020の台車制御RTC" rtc:category="Controller" rtc:componentKind="DataFlowComponent" rtc:activityType="PERIODIC" rtc:componentType="STATIC" rtc:name="RTC_Spider2020_Crawler">
+        <rtcExt:VersionUpLogs></rtcExt:VersionUpLogs>
+    </rtc:BasicInfo>
+    <rtc:Actions>
+        <rtc:OnInitialize xsi:type="rtcDoc:action_status_doc" rtc:implemented="true"/>
+        <rtc:OnFinalize xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnStartup xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnShutdown xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnActivated xsi:type="rtcDoc:action_status_doc" rtc:implemented="true"/>
+        <rtc:OnDeactivated xsi:type="rtcDoc:action_status_doc" rtc:implemented="true"/>
+        <rtc:OnAborting xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnError xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnReset xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnExecute xsi:type="rtcDoc:action_status_doc" rtc:implemented="true"/>
+        <rtc:OnStateUpdate xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnRateChanged xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnAction xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnModeChanged xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+    </rtc:Actions>
+    <rtc:ConfigurationSet>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="[m]" rtc:defaultValue="0.0769" rtc:type="double" rtc:name="WHEEL_RADIUS">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="[m]" rtcDoc:description="Wheel Radius" rtcDoc:defaultValue="0.0769" rtcDoc:dataname="メインクローラの車輪半径"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="[m]" rtc:defaultValue="0.0486" rtc:type="double" rtc:name="PULLEY_RADIUS">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="[m]" rtcDoc:description="Pulley Radius" rtcDoc:defaultValue="0.0486" rtcDoc:dataname="フリッパーのプーリ半径"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="[m]" rtc:defaultValue="0.0938" rtc:type="double" rtc:name="TURNING_RADIUS">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="[m]" rtcDoc:description="Turning Radius" rtcDoc:defaultValue="0.0938" rtcDoc:dataname="旋回半径"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="/dev/ttyUSB0" rtc:type="string" rtc:name="SH1_DEVICE_NAME">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="メインモータを制御するマイコンのデバイス名" rtcDoc:defaultValue="/dev/ttyUSB0" rtcDoc:dataname="メインモータのデバイス名"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="/dev/ttyUSB1" rtc:type="string" rtc:name="SH2_DEVICE_NAME">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="前方サブモータを制御するマイコンのデバイス名" rtcDoc:defaultValue="/dev/ttyUSB1" rtcDoc:dataname="前方サブモータのデバイス名"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="/dev/ttyUSB2" rtc:type="string" rtc:name="SH3_DEVICE_NAME">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="後方サブモータを制御するマイコンのデバイス名" rtcDoc:defaultValue="/dev/ttyUSB2" rtcDoc:dataname="後方サブモータのデバイス名"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="B38400" rtc:type="string" rtc:name="SH1_BAUDRATE">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="メインモータを制御するマイコンとの伝送速度" rtcDoc:defaultValue="B38400" rtcDoc:dataname="メインモータの伝送速度"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="B38400" rtc:type="string" rtc:name="SH2_BAUDRATE">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="前方サブモータを制御するマイコンとの伝送速度" rtcDoc:defaultValue="B38400" rtcDoc:dataname="前方サブモータの伝送速度"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="B38400" rtc:type="string" rtc:name="SH3_BAUDRATE">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="後方サブモータを制御するマイコンとの伝送速度" rtcDoc:defaultValue="B38400" rtcDoc:dataname="後方サブモータの伝送速度"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="0.42" rtc:type="double" rtc:name="MAIN_MOTOR_KP">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="メインモータのPID速度制御の比例ゲイン" rtcDoc:defaultValue="0.42" rtcDoc:dataname="メインモータの比例ゲイン"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="4.00" rtc:type="double" rtc:name="MAIN_MOTOR_KI">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="メインモータのPID速度制御の積分ゲイン" rtcDoc:defaultValue="4.00" rtcDoc:dataname="メインモータの積分ゲイン"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="0.02" rtc:type="double" rtc:name="MAIN_MOTOR_KD">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="メインモータのPID速度制御の微分ゲイン" rtcDoc:defaultValue="0.02" rtcDoc:dataname="メインモータの微分ゲイン"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="VX_GAIN" rtc:unit="" rtc:defaultValue="1.000" rtc:type="double" rtc:name="VX_GAIN">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="オドメトリの並進距離を実測に近づけるための係数" rtcDoc:defaultValue="1.000" rtcDoc:dataname="並進係数"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="VA_GAIN" rtc:unit="" rtc:defaultValue="1.000" rtc:type="double" rtc:name="VA_GAIN">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="オドメトリの旋回を実測に近づけるための係数" rtcDoc:defaultValue="1.000" rtcDoc:dataname="旋回係数"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="1000" rtc:type="long" rtc:name="MAIN_MOTOR_PULSE">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="1000 = 500(パルス) x 2(逓倍) ※位相計数モード4" rtcDoc:defaultValue="1000" rtcDoc:dataname="メインモータのパルス数"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="243" rtc:type="double" rtc:name="MAIN_MOTOR_GEAR_RATIO">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="メインモータの減速比" rtcDoc:defaultValue="243" rtcDoc:dataname="メインモータの減速比"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="512" rtc:type="long" rtc:name="SUB_MOTOR_PULSE">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="512 = 256(パルス) x 2(逓倍) ※位相計数モード4" rtcDoc:defaultValue="512" rtcDoc:dataname="サブモータのパルス数"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="1080.0" rtc:type="double" rtc:name="SUB_MOTOR_GEAR_RATIO">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="サブモータの減速比" rtcDoc:defaultValue="1080.0" rtcDoc:dataname="サブモータの減速比"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="1" rtc:type="long" rtc:name="R_MAIN_MOTOR_DIRECTION">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="右メインモータの回転方向(1:正回転、-1:負回転)" rtcDoc:defaultValue="1" rtcDoc:dataname="右メインモータの回転方向"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="1" rtc:type="long" rtc:name="L_MAIN_MOTOR_DIRECTION">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="左メインモータの回転方向(1:正回転、-1:負回転)" rtcDoc:defaultValue="1" rtcDoc:dataname="左メインモータの回転方向"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="1" rtc:type="long" rtc:name="R_FRONT_SUB_MOTOR_DIRECTION">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="右前方モータの回転方向(1:正回転、-1:負回転)" rtcDoc:defaultValue="1" rtcDoc:dataname="右前方モータの回転方向"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="1" rtc:type="long" rtc:name="L_FRONT_SUB_MOTOR_DIRECTION">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="左前方モータの回転方向(1:正回転、-1:負回転)" rtcDoc:defaultValue="1" rtcDoc:dataname="右前方モータの回転方向"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="1" rtc:type="long" rtc:name="R_BACK_SUB_MOTOR_DIRECTION">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="右後方モータの回転方向(1:正回転、-1:負回転)" rtcDoc:defaultValue="1" rtcDoc:dataname="右後方モータの回転方向"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="1" rtc:type="long" rtc:name="L_BACK_SUB_MOTOR_DIRECTION">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="左後方モータの回転方向(1:正回転、-1:負回転)" rtcDoc:defaultValue="1" rtcDoc:dataname="左後方モータの回転方向"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="7.5" rtc:type="double" rtc:name="MAIN_MOTOR_LOAD_GAIN">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="メインモータの電圧値をモータ負荷に変換するゲイン" rtcDoc:defaultValue="7.5" rtcDoc:dataname="メインモータのモータ負荷のゲイン"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="2.0" rtc:type="double" rtc:name="MAIN_MOTOR_LOAD_BASE">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="メインモータの電圧値の基準値" rtcDoc:defaultValue="2.0" rtcDoc:dataname="メインモータのモータ負荷の基準電圧"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="7.5" rtc:type="double" rtc:name="SUB_MOTOR_LOAD_GAIN">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="サブモータの電圧値をモータ負荷に変換するゲイン" rtcDoc:defaultValue="7.5" rtcDoc:dataname="サブモータのモータ負荷のゲイン"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="2.0" rtc:type="double" rtc:name="SUB_MOTOR_LOAD_BASE">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="サブモータの電圧値の基準値" rtcDoc:defaultValue="2.0" rtcDoc:dataname="サブモータのモータ負荷の基準電圧"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="1.0" rtc:type="double" rtc:name="FAILSAFE_SEC">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="入力ポートへ指定時間以上新しい入力がなければ、&lt;br/&gt;暴走を回避するため入力データのクリアなどを実施する。" rtcDoc:defaultValue="1.0" rtcDoc:dataname="フェイルセーフ時間"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="" rtc:defaultValue="0" rtc:type="long" rtc:name="USE_ORIENTATION3D_IN">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="" rtcDoc:description="0: オドメトリの処理に外部観測した３次元の姿勢を使用しない。&lt;br/&gt;1: オドメトリの処理に外部観測した３次元の姿勢を使用する。" rtcDoc:defaultValue="0" rtcDoc:dataname="外部観測した３次元の姿勢"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+    </rtc:ConfigurationSet>
+    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtcExt:position="LEFT" rtcExt:variableName="Mode_In" rtc:unit="" rtc:subscriptionType="" rtc:dataflowType="" rtc:interfaceType="" rtc:idlFile="/usr/local/include/openrtm-1.2/rtm/idl/BasicDataType.idl" rtc:type="RTC::TimedLongSeq" rtc:name="Mode_In" rtc:portType="DataInPort">
+        <rtcDoc:Doc rtcDoc:operation="" rtcDoc:occerrence="" rtcDoc:unit="" rtcDoc:semantics="" rtcDoc:number="6" rtcDoc:type="TimedLongSeq" rtcDoc:description="動作指令の状態"/>
+    </rtc:DataPorts>
+    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtcExt:position="LEFT" rtcExt:variableName="Velocity2D_In" rtc:unit="" rtc:subscriptionType="" rtc:dataflowType="" rtc:interfaceType="" rtc:idlFile="/usr/local/include/openrtm-1.2/rtm/idl/ExtendedDataTypes.idl" rtc:type="RTC::TimedVelocity2D" rtc:name="Velocity2D_In" rtc:portType="DataInPort">
+        <rtcDoc:Doc rtcDoc:operation="" rtcDoc:occerrence="" rtcDoc:unit="" rtcDoc:semantics="" rtcDoc:number="" rtcDoc:type="TimedVelocity2D" rtcDoc:description="２次元の速度"/>
+    </rtc:DataPorts>
+    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtcExt:position="LEFT" rtcExt:variableName="FlipperPwm_In" rtc:unit="" rtc:subscriptionType="" rtc:dataflowType="" rtc:interfaceType="" rtc:idlFile="/usr/local/include/openrtm-1.2/rtm/idl/BasicDataType.idl" rtc:type="RTC::TimedLongSeq" rtc:name="FlipperPwm_In" rtc:portType="DataInPort">
+        <rtcDoc:Doc rtcDoc:operation="" rtcDoc:occerrence="" rtcDoc:unit="" rtcDoc:semantics="" rtcDoc:number="4" rtcDoc:type="TimedLongSeq" rtcDoc:description="フリッパーのPWM指令"/>
+    </rtc:DataPorts>
+    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtcExt:position="LEFT" rtcExt:variableName="" rtc:unit="" rtc:subscriptionType="" rtc:dataflowType="" rtc:interfaceType="" rtc:idlFile="/usr/local/include/openrtm-1.2/rtm/idl/ExtendedDataTypes.idl" rtc:type="RTC::TimedOrientation3D" rtc:name="Orientation3D_In" rtc:portType="DataInPort">
+        <rtcDoc:Doc rtcDoc:operation="" rtcDoc:occerrence="" rtcDoc:unit="" rtcDoc:semantics="" rtcDoc:number="" rtcDoc:type="TimedOrientation3D" rtcDoc:description="外部観測した３次元の姿勢"/>
+    </rtc:DataPorts>
+    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtcExt:position="RIGHT" rtcExt:variableName="Pose3D_Out" rtc:unit="" rtc:subscriptionType="" rtc:dataflowType="" rtc:interfaceType="" rtc:idlFile="/usr/local/include/openrtm-1.2/rtm/idl/ExtendedDataTypes.idl" rtc:type="RTC::TimedPose3D" rtc:name="Pose3D_Out" rtc:portType="DataOutPort">
+        <rtcDoc:Doc rtcDoc:operation="" rtcDoc:occerrence="" rtcDoc:unit="[m,rad]" rtcDoc:semantics="" rtcDoc:number="" rtcDoc:type="TimedPose3D" rtcDoc:description="オドメトリによる３次元の位置・姿勢"/>
+    </rtc:DataPorts>
+    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtcExt:position="RIGHT" rtcExt:variableName="Velocity2D_Out" rtc:unit="" rtc:subscriptionType="" rtc:dataflowType="" rtc:interfaceType="" rtc:idlFile="/usr/local/include/openrtm-1.2/rtm/idl/ExtendedDataTypes.idl" rtc:type="RTC::TimedVelocity2D" rtc:name="Velocity2D_Out" rtc:portType="DataOutPort">
+        <rtcDoc:Doc rtcDoc:operation="" rtcDoc:occerrence="" rtcDoc:unit="" rtcDoc:semantics="" rtcDoc:number="" rtcDoc:type="TimedVelocity2D" rtcDoc:description="２次元の速度"/>
+    </rtc:DataPorts>
+    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtcExt:position="RIGHT" rtcExt:variableName="FlipperAngle_Out" rtc:unit="" rtc:subscriptionType="" rtc:dataflowType="" rtc:interfaceType="" rtc:idlFile="/usr/local/include/openrtm-1.2/rtm/idl/BasicDataType.idl" rtc:type="RTC::TimedDoubleSeq" rtc:name="FlipperAngle_Out" rtc:portType="DataOutPort">
+        <rtcDoc:Doc rtcDoc:operation="" rtcDoc:occerrence="" rtcDoc:unit="" rtcDoc:semantics="[0]: 右前&lt;br/&gt;[1]: 左前&lt;br/&gt;[2]: 右後&lt;br/&gt;[3]: 左後" rtcDoc:number="4" rtcDoc:type="TimedDoubleSeq" rtcDoc:description="フリッパーの角度"/>
+    </rtc:DataPorts>
+    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtcExt:position="RIGHT" rtcExt:variableName="MotorLoad_Out" rtc:unit="" rtc:subscriptionType="" rtc:dataflowType="" rtc:interfaceType="" rtc:idlFile="/usr/local/include/openrtm-1.2/rtm/idl/BasicDataType.idl" rtc:type="RTC::TimedDoubleSeq" rtc:name="MotorLoad_Out" rtc:portType="DataOutPort">
+        <rtcDoc:Doc rtcDoc:operation="" rtcDoc:occerrence="" rtcDoc:unit="[A]" rtcDoc:semantics="[0]: 右メインモータ&lt;br/&gt;[1]: 左メインモータ&lt;br/&gt;[2]: 右前方サブモータ&lt;br/&gt;[3]: 左前方サブモータ&lt;br/&gt;[4]: 右後方サブモータ&lt;br/&gt;[5]: 左後方サブモータ" rtcDoc:number="6" rtcDoc:type="TimedDoubleSeq" rtcDoc:description="各モータの負荷"/>
+    </rtc:DataPorts>
+    <rtc:Language xsi:type="rtcExt:language_ext" rtc:kind="C++">
+        <rtcExt:targets rtcExt:other="ffff" rtcExt:os="Ubuntu" rtcExt:langVersion="18.04">
+            <rtcExt:libraries rtcExt:other="" rtcExt:version="1.2.1" rtcExt:name="OpenRTM-aist(C++)"/>
+        </rtcExt:targets>
+    </rtc:Language>
+</rtc:RtcProfile>

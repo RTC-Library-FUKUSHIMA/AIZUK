@@ -1,0 +1,54 @@
+# RTC_Spider2020_Crawler CMake config file
+#
+# This file sets the following variables:
+# RTC_Spider2020_Crawler_FOUND - Always TRUE.
+# RTC_Spider2020_Crawler_INCLUDE_DIRS - Directories containing the RTC_Spider2020_Crawler include files.
+# RTC_Spider2020_Crawler_IDL_DIRS - Directories containing the RTC_Spider2020_Crawler IDL files.
+# RTC_Spider2020_Crawler_LIBRARIES - Libraries needed to use RTC_Spider2020_Crawler.
+# RTC_Spider2020_Crawler_DEFINITIONS - Compiler flags for RTC_Spider2020_Crawler.
+# RTC_Spider2020_Crawler_VERSION - The version of RTC_Spider2020_Crawler found.
+# RTC_Spider2020_Crawler_VERSION_MAJOR - The major version of RTC_Spider2020_Crawler found.
+# RTC_Spider2020_Crawler_VERSION_MINOR - The minor version of RTC_Spider2020_Crawler found.
+# RTC_Spider2020_Crawler_VERSION_REVISION - The revision version of RTC_Spider2020_Crawler found.
+# RTC_Spider2020_Crawler_VERSION_CANDIDATE - The candidate version of RTC_Spider2020_Crawler found.
+
+message(STATUS "Found RTC_Spider2020_Crawler-@PROJECT_VERSION@")
+set(RTC_Spider2020_Crawler_FOUND TRUE)
+
+find_package(<dependency> REQUIRED)
+
+#set(RTC_Spider2020_Crawler_INCLUDE_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@"
+#    ${<dependency>_INCLUDE_DIRS}
+#    )
+#
+#set(RTC_Spider2020_Crawler_IDL_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@/idl")
+set(RTC_Spider2020_Crawler_INCLUDE_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@"
+    ${<dependency>_INCLUDE_DIRS}
+    )
+set(RTC_Spider2020_Crawler_IDL_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@/idl")
+
+
+if(WIN32)
+    set(RTC_Spider2020_Crawler_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_STATIC_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+else(WIN32)
+    set(RTC_Spider2020_Crawler_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_SHARED_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+endif(WIN32)
+
+set(RTC_Spider2020_Crawler_DEFINITIONS ${<dependency>_DEFINITIONS})
+
+set(RTC_Spider2020_Crawler_VERSION @PROJECT_VERSION@)
+set(RTC_Spider2020_Crawler_VERSION_MAJOR @PROJECT_VERSION_MAJOR@)
+set(RTC_Spider2020_Crawler_VERSION_MINOR @PROJECT_VERSION_MINOR@)
+set(RTC_Spider2020_Crawler_VERSION_REVISION @PROJECT_VERSION_REVISION@)
+set(RTC_Spider2020_Crawler_VERSION_CANDIDATE @PROJECT_VERSION_CANDIDATE@)
+

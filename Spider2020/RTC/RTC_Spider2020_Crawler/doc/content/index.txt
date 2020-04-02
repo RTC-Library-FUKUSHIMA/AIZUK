@@ -1,0 +1,177 @@
+﻿RTC_Spider2020_CrawlerName - English
+========================
+
+.. toctree::
+   :hidden:
+
+   index_j
+
+
+Introduction
+============
+
+
+For a full list of classes and functions, see the `API documentation`_.
+
+.. _`API Documentation`:
+   doxygen/html/index.html
+
+Requirements
+============
+
+RTC_Spider2020_Crawler uses the `CMake build system`. You will need at least version
+2.8 to be able to build the component.
+
+.. _`CMAke build system`:
+   http://www.cmake.org
+
+
+Installation
+============
+
+Binary
+------
+
+Users of Windows can install the component using the binary installer. This
+will install the component and all its necessary dependencies. It is the
+recommended method of installation in Windows.
+
+- Download the installer from the website.
+- Double-click the executable file to begin installation.
+- Follow the instructions to install the component.
+- You may need to restart your computer for environment variable changes
+  to take effect before using the component.
+
+The component can be launched by double-clicking the
+``RTC_Spider2020_CrawlerComp`` executable. The ``RTC_Spider2020_Crawler`` library
+is available for loading into a manager, using the initialisation function
+``RTC_Spider2020_CrawlerInit``.
+
+From source
+-----------
+
+Follow these steps to install RTC_Spider2020_Crawler from source in any operating
+system:
+
+- Download the source, either from the repository or a source archive,
+  and extract it somewhere::
+
+    tar -xvzf RTC_Spider2020_Crawler-2.0.0.tar.gz
+
+- Change to the directory containing the extracted source::
+
+    cd RTC_Spider2020_Crawler-2.0.0
+
+- Create a directory called ``build``::
+
+    mkdir build
+
+- Change to that directory::
+
+    cd build
+
+- Run cmake or cmake-gui::
+
+    cmake ../
+
+- If no errors occurred, run make::
+
+    make
+
+- Finally, install the component. Ensure the necessary permissions to
+  install into the chosen prefix are available::
+
+    make install
+
+- The install destination can be changed by executing ccmake and changing
+  the variable ``CMAKE_INSTALL_PREFIX``::
+
+    ccmake ../
+
+The component is now ready for use. See the next section for instructions on
+configuring the component.
+
+RTC_Spider2020_Crawler can be launched in stand-alone mode by executing the
+``RTC_Spider2020_CrawlerComp`` executable (installed into ``${prefix}/components/bin``).
+Alternatively, ``libRTC_Spider2020_Crawler.so`` can be loaded into a manager, using the
+initialisation function ``RTC_Spider2020_CrawlerInit``. This shared object can be found in
+``${prefix}/components/lib`` or ``${prefix}/components/lib64``.
+
+
+Configuration
+=============
+
+The available configuration parameters are described below:
+
+================ ================== ================ ======
+Parameter        Data type          Default Value    Effect
+================ ================== ================ ======
+WHEEL_RADIUS     double             0.0769           Wheel Radius
+PULLEY_RADIUS    double             0.0486           Pulley Radius
+TURNING_RADIUS   double             0.0938           Turning Radius
+SH1_DEVICE_NAME  string             /dev/ttyUSB0     メインモータを制御するマイコンのデバイス名
+SH2_DEVICE_NAME  string             /dev/ttyUSB1     前方サブモータを制御するマイコンのデバイス名
+SH3_DEVICE_NAME  string             /dev/ttyUSB2     後方サブモータを制御するマイコンのデバイス名
+SH1_BAUDRATE     string             B38400           メインモータを制御するマイコンとの伝送速度
+SH2_BAUDRATE     string             B38400           前方サブモータを制御するマイコンとの伝送速度
+SH3_BAUDRATE     string             B38400           後方サブモータを制御するマイコンとの伝送速度
+MAIN_MOTOR_KP    double             0.42             メインモータのPID速度制御の比例ゲイン
+MAIN_MOTOR_KI    double             4.00             メインモータのPID速度制御の積分ゲイン
+MAIN_MOTOR_KD    double             0.02             メインモータのPID速度制御の微分ゲイン
+VX_GAIN          double             1.000            オドメトリの並進距離を実測に近づけるための係数
+VA_GAIN          double             1.000            オドメトリの旋回を実測に近づけるための係数
+MAIN_MOTOR_PULSE long               1000             1000 = 500(パルス) x 2(逓倍) ※位相計数モード4
+MAIN_MOTOR_GEAR_RATIO double             243              メインモータの減速比
+SUB_MOTOR_PULSE  long               512              512 = 256(パルス) x 2(逓倍) ※位相計数モード4
+SUB_MOTOR_GEAR_RATIO double             1080.0           サブモータの減速比
+R_MAIN_MOTOR_DIRECTION long               1                右メインモータの回転方向(1:正回転、-1:負回転)
+L_MAIN_MOTOR_DIRECTION long               1                左メインモータの回転方向(1:正回転、-1:負回転)
+R_FRONT_SUB_MOTOR_DIRECTION long               1                右前方モータの回転方向(1:正回転、-1:負回転)
+L_FRONT_SUB_MOTOR_DIRECTION long               1                左前方モータの回転方向(1:正回転、-1:負回転)
+R_BACK_SUB_MOTOR_DIRECTION long               1                右後方モータの回転方向(1:正回転、-1:負回転)
+L_BACK_SUB_MOTOR_DIRECTION long               1                左後方モータの回転方向(1:正回転、-1:負回転)
+MAIN_MOTOR_LOAD_GAIN double             7.5              メインモータの電圧値をモータ負荷に変換するゲイン
+MAIN_MOTOR_LOAD_BASE double             2.0              メインモータの電圧値の基準値
+SUB_MOTOR_LOAD_GAIN double             7.5              サブモータの電圧値をモータ負荷に変換するゲイン
+SUB_MOTOR_LOAD_BASE double             2.0              サブモータの電圧値の基準値
+FAILSAFE_SEC     double             1.0              入力ポートへ指定時間以上新しい入力がなければ、<br/>暴走を回避するため入力データのクリアなどを実施する。
+USE_ORIENTATION3D_IN long               0                0: オドメトリの処理に外部観測した３次元の姿勢を使用しない。<br/>1: オドメトリの処理に外部観測した３次元の姿勢を使用する。
+================ ================== ================ ======
+
+Ports
+=====
+
+The ports provided by the component are described below:
+
+=============== =========== ============================== =======
+Name            Type        Data type                      Purpose
+=============== =========== ============================== =======
+Mode_In         InPort      RTC::TimedLongSeq              動作指令の状態
+Velocity2D_In   InPort      RTC::TimedVelocity2D           ２次元の速度
+FlipperPwm_In   InPort      RTC::TimedLongSeq              フリッパーのPWM指令
+Orientation3D_In InPort      RTC::TimedOrientation3D        外部観測した３次元の姿勢
+Pose3D_Out      OutPort     RTC::TimedPose3D               オドメトリによる３次元の位置・姿勢
+Velocity2D_Out  OutPort     RTC::TimedVelocity2D           ２次元の速度
+FlipperAngle_Out OutPort     RTC::TimedDoubleSeq            フリッパーの角度
+MotorLoad_Out   OutPort     RTC::TimedDoubleSeq            各モータの負荷
+=============== =========== ============================== =======
+
+Examples
+========
+
+An example configuration file is provided in the
+``${prefix}/components/share/RTC_Spider2020_Crawler/examples/conf/`` directory.
+
+Changelog
+=========
+
+
+
+License
+=======
+
+This software is developed at the National Institute of Advanced
+Industrial Science and Technology. Approval number H23PRO-????. This
+software is licensed under the Lesser General Public License. See
+COPYING.LESSER.
+
