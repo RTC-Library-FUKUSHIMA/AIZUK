@@ -1,0 +1,169 @@
+﻿RTC_Spider2020_LogName - English
+========================
+
+.. toctree::
+   :hidden:
+
+   index_j
+
+
+Introduction
+============
+
+
+For a full list of classes and functions, see the `API documentation`_.
+
+.. _`API Documentation`:
+   doxygen/html/index.html
+
+Requirements
+============
+
+RTC_Spider2020_Log uses the `CMake build system`. You will need at least version
+2.8 to be able to build the component.
+
+.. _`CMAke build system`:
+   http://www.cmake.org
+
+
+Installation
+============
+
+Binary
+------
+
+Users of Windows can install the component using the binary installer. This
+will install the component and all its necessary dependencies. It is the
+recommended method of installation in Windows.
+
+- Download the installer from the website.
+- Double-click the executable file to begin installation.
+- Follow the instructions to install the component.
+- You may need to restart your computer for environment variable changes
+  to take effect before using the component.
+
+The component can be launched by double-clicking the
+``RTC_Spider2020_LogComp`` executable. The ``RTC_Spider2020_Log`` library
+is available for loading into a manager, using the initialisation function
+``RTC_Spider2020_LogInit``.
+
+From source
+-----------
+
+Follow these steps to install RTC_Spider2020_Log from source in any operating
+system:
+
+- Download the source, either from the repository or a source archive,
+  and extract it somewhere::
+
+    tar -xvzf RTC_Spider2020_Log-2.0.0.tar.gz
+
+- Change to the directory containing the extracted source::
+
+    cd RTC_Spider2020_Log-2.0.0
+
+- Create a directory called ``build``::
+
+    mkdir build
+
+- Change to that directory::
+
+    cd build
+
+- Run cmake or cmake-gui::
+
+    cmake ../
+
+- If no errors occurred, run make::
+
+    make
+
+- Finally, install the component. Ensure the necessary permissions to
+  install into the chosen prefix are available::
+
+    make install
+
+- The install destination can be changed by executing ccmake and changing
+  the variable ``CMAKE_INSTALL_PREFIX``::
+
+    ccmake ../
+
+The component is now ready for use. See the next section for instructions on
+configuring the component.
+
+RTC_Spider2020_Log can be launched in stand-alone mode by executing the
+``RTC_Spider2020_LogComp`` executable (installed into ``${prefix}/components/bin``).
+Alternatively, ``libRTC_Spider2020_Log.so`` can be loaded into a manager, using the
+initialisation function ``RTC_Spider2020_LogInit``. This shared object can be found in
+``${prefix}/components/lib`` or ``${prefix}/components/lib64``.
+
+
+Configuration
+=============
+
+The available configuration parameters are described below:
+
+================ ================== ================ ======
+Parameter        Data type          Default Value    Effect
+================ ================== ================ ======
+ID               string             spider2020       ロボット識別子
+================ ================== ================ ======
+
+Ports
+=====
+
+The ports provided by the component are described below:
+
+=============== =========== ============================== =======
+Name            Type        Data type                      Purpose
+=============== =========== ============================== =======
+Pose3D_In       InPort      RTC::TimedPose3D               ３次元の位置姿勢
+MotorLoad_In    InPort      RTC::TimedDoubleSeq            モータの負荷
+FlipperAngle_In InPort      RTC::TimedDoubleSeq            フリッパーの角度
+IMU_Orientation3D_In InPort      RTC::TimedOrientation3D        ３次元の姿勢<br/>（IMU）
+Velocity2D_In   InPort      RTC::TimedVelocity2D           メインクローラの速度
+GCCapacityRatio_In InPort      RTC::TimedDouble               DualShock4コントローラのバッテリ残容量比
+GCAxis_In       InPort      RTC::TimedDoubleSeq            DualShock4コントローラの軸キーの入力具合
+GCButton_In     InPort      RTC::TimedULong                DualShock4コントローラのボタンの押下状態
+MainCapacityRatio_In InPort      RTC::TimedDouble               メインバッテリのバッテリ残存容量比
+Mode_In         InPort      RTC::TimedLongSeq              動作指令の状態
+Arm1Pose3D_In  InPort      RTC::TimedPose3D               Arm1の位置姿勢<br/>（ロボット座標系）
+Arm1Angular_In InPort      RTC::TimedDoubleSeq            Arm1の腕の角度
+Arm1Finger_In  InPort      RTC::TimedLongSeq              Arm1の指の開閉具合
+Arm1Current_In InPort      RTC::TimedDoubleSeq            Arm1のモータ負荷
+RobotID_Out     OutPort     RTC::TimedString               ロボット識別子
+Pose3D_Out      OutPort     RTC::TimedPose3D               ３次元の位置姿勢
+MotorLoad_Out   OutPort     RTC::TimedDoubleSeq            モータの負荷
+FlipperAngle_Out OutPort     RTC::TimedDoubleSeq            フリッパーの角度
+IMU_Orientation3D_Out OutPort     RTC::TimedOrientation3D        ３次元の姿勢<br/>（IMU）
+Velocity2D_Out  OutPort     RTC::TimedVelocity2D           メインクローラの速度
+GCCapacityRatio_Out OutPort     RTC::TimedDouble               DualShock4コントローラのバッテリ残容量比
+GCAxis_Out      OutPort     RTC::TimedDoubleSeq            DualShock4コントローラの軸キーの入力具合
+GCButton_Out    OutPort     RTC::TimedULong                DualShock4コントローラのボタンの押下状態
+MainCapacityRatio_Out OutPort     RTC::TimedDouble               メインバッテリのバッテリ残存容量比
+Mode_Out        OutPort     RTC::TimedLongSeq              動作指令の状態
+Arm1Pose3D_Out OutPort     RTC::TimedPose3D               Arm1の位置姿勢<br/>（ロボット座標系）
+Arm1Angular_Out OutPort     RTC::TimedDoubleSeq            Arm1の腕の角度
+Arm1Finger_Out OutPort     RTC::TimedLongSeq              Arm1の指の開閉具合
+Arm1Current_Out OutPort     RTC::TimedDoubleSeq            Arm1のモータ負荷
+=============== =========== ============================== =======
+
+Examples
+========
+
+An example configuration file is provided in the
+``${prefix}/components/share/RTC_Spider2020_Log/examples/conf/`` directory.
+
+Changelog
+=========
+
+
+
+License
+=======
+
+This software is developed at the National Institute of Advanced
+Industrial Science and Technology. Approval number H23PRO-????. This
+software is licensed under the Lesser General Public License. See
+COPYING.LESSER.
+
