@@ -1,0 +1,42 @@
+ARM_FRAME: &ARM_FRAME
+  - &ARM_FRAME_RigidBody
+    type: RigidBody
+    centerOfMass: [ 0, 0, 0.03010 ]
+    mass: 0.23304
+    inertia: [
+      0.00010579665, 0,             0.00000000001,
+      0,             0.00010579665, 0.00000000001,
+      0.00000000001, 0.00000000001, 0.00006408714 ]
+  - &ARM_FRAME_Visual
+    type: Visual
+    resource: { uri: "ARM_FRAME.wrl" }
+  -
+    type: Collision
+    elements:
+      Shape:
+        translation: [ 0, 0, 0.030 ]
+        geometry: { type: Box, size: [ 0.040, 0.040, 0.060 ] }
+
+ARM_BRACKET: &ARM_BRACKET
+  - &ARM_BRACKET_RigidBody
+    type: RigidBody
+    centerOfMass: [ 0.05352, 0, -0.00642 ]
+    mass: 0.51115
+    inertia: [
+      0.00055832460, 0,                 0.00002442427,
+      0,             0.000000179109221, 0,
+      0.00002442427, 0,                 0.00180257197 ]
+  - &ARM_BRACKET_Visual
+    type: Visual
+    resource: { uri: "ARM_BRACKET.wrl" }
+  -
+    type: Collision
+    elements:
+      -
+        type: Shape
+        translation: [ 0.003, 0, 0 ]
+        geometry: { type: Box, size: [ 0.006, 0.090, 0.125 ] }
+      -
+        type: Shape
+        translation: [ 0.090, 0, -0.003 ]
+        geometry: { type: Box, size: [ 0.180, 0.090, 0.006 ] }

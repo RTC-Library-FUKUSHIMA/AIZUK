@@ -1,0 +1,82 @@
+format: ChoreonoidBody
+formatVersion: 1.0
+angleUnit: degree
+name: Spider2020
+rootLink: CHASSIS
+
+COMMON_RESOURCE: &COMMON_RESOURCE
+  type: Resource
+  uri: "resource/Spider2020Common.yaml"
+
+links:
+  -
+    type: SubBody
+    uri: "../Giraffe/GiraffeNS.body"
+    jointType: free
+
+  - # シャーシ取付パーツ
+    name: CHASSIS_EX
+    parent: CHASSIS
+    jointType: fixed
+    elements:
+      - # アーム取付フレーム
+        { <<: *COMMON_RESOURCE, node: ARM_FRAME, translation: [ 0.44630, 0, 0.16860 ] }
+
+      - # アーム取付ブラケット
+        { <<: *COMMON_RESOURCE, node: ARM_BRACKET, translation: [ 0.30630, 0, 0.16860 ] }
+
+  -
+    type: SubBody
+    uri: "../JACO2/JACO2.body"
+    parent: CHASSIS_EX
+    translation: [ 0.44630, 0, 0.17940 ]
+    rotation: [ 0, 0, 1, 90 ]
+    jointType: fixed
+    jointIdOffset: 4
+
+# 標準姿勢
+standardPose: [
+  0,        # FR_FLIPPER
+  0,        # FL_FLIPPER
+  0,        # BR_FLIPPER
+  0,        # BL_FLIPPER
+  276,      # SHOULDER
+  168,      # ARM
+  58,       # FOREARM
+  241,      # WRIST1
+  83,       # WRIST2
+  76,       # HAND
+  0,        # FINGER1
+  0,        # FINGER2
+  0         # FINGER3
+]
+
+# 干渉設定
+collisionDetection:
+  excludeTreeDepth: 1
+  excludeLinkGroups:
+    -
+      name: ChassisGroup
+      links: [
+        CHASSIS, CHASSIS_EX, R_BELT, L_BELT ]
+    -
+      name: FrontSubGroup
+      links: [
+        FR_FLIPPER, FR_SUB_BELT,
+        FL_FLIPPER, FL_SUB_BELT ]
+    -
+      name: BackSubGroup
+      links: [
+        BR_FLIPPER, BR_SUB_BELT,
+        BL_FLIPPER, BL_SUB_BELT ]
+    -
+      name: ShoulderGroup
+      links: [ BASE, SHOULDER, ARM ]
+    -
+      name: ForeArmGroup
+      links: [ FOREARM, WRIST1, WRIST2, HAND ]
+    -
+      name: FingerGroup
+      links: [ FINGER1, FINGER2, FINGER3 ]
+
+  excludeLinksWireCollision: [ FINGER1, FINGER1_TIP, FINGER2, FINGER2_TIP, FINGER3, FINGER3_TIP ]

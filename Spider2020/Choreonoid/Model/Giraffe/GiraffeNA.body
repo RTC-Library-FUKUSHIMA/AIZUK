@@ -1,0 +1,412 @@
+format: ChoreonoidBody
+formatVersion: 1.0
+angleUnit: degree
+name: Giraffe
+rootLink: CHASSIS
+
+COMMON_RESOURCE: &COMMON_RESOURCE
+  type: Resource
+  uri: "resource/GiraffeCommon.yaml"
+
+MAIN_BELT_SPEC: &MAIN_BELT_SPEC
+  numberOfNodes: 46
+  nodeThickness: 0.011
+  nodeWidth: 0.044
+  nodeDistanceTension: 5.0e-5
+  nodeThickerThickness: 0.021
+  useThickerNodeEvery: 2
+  hingeCompliance: 1e-6
+  hingeSpookDamping: 15.0e-3
+  minStabilizingHingeNormalForce: 50
+  stabilizingHingeFrictionParameter: 2.0e-7
+  numNodesPerMergeSegment: 2
+  maxAngleMergeCondition: 1.0e-5
+  nodesToWheelsMergeThreshold: -0.01
+  nodesToWheelsSplitThreshold: -0.009
+
+SUB_BELT_SPEC: &SUB_BELT_SPEC
+  numberOfNodes: 28
+  nodeThickness: 0.011
+  nodeWidth: 0.044
+  nodeDistanceTension: 5.0e-4
+  nodeThickerThickness: 0.020
+  useThickerNodeEvery: 2
+  hingeCompliance: 5.0e-6
+  hingeSpookDamping: 15.0e-3
+  minStabilizingHingeNormalForce: 40
+  stabilizingHingeFrictionParameter: 4.0e-8
+  numNodesPerMergeSegment: 5
+
+COMMON_BELT_SPEC: &COMMON_BELT_SPEC
+  massType: density
+  material: GiraffeTracks
+  contactReduction: 3
+  enableMerge: true
+  enableLockToReachMergeCondition: true
+  lockToReachMergeConditionCompliance: 1.0e-11
+  lockToReachMergeConditionSpookDamping: 0.05
+
+links:
+  -
+    name: CHASSIS
+    translation: [ 0, 0, 0.010 ]
+    jointType: free
+    elements:
+      - # シャーシ
+        { <<: *COMMON_RESOURCE, node: CHASSIS }
+
+      - # 右メインベルト
+        type: AGXVehicleContinuousTrackDevice
+        name: R_BELT_AGX
+        sprocketNames: [ R_BELT_SPROCKET ]
+        rollerNames: [ R_BELT_CARRIER_ROLLER ]
+        guideNames: [ R_BELT_TRACK_ROLLER ]
+        idlerNames: [ R_BELT_IDLER ]
+        upAxis: [ 0, 0, 1 ]
+        <<: [ *MAIN_BELT_SPEC, *COMMON_BELT_SPEC ]
+
+      - # 左メインベルト
+        type: AGXVehicleContinuousTrackDevice
+        name: L_BELT_AGX
+        sprocketNames: [ L_BELT_SPROCKET ]
+        rollerNames: [ L_BELT_CARRIER_ROLLER ]
+        guideNames: [ L_BELT_TRACK_ROLLER ]
+        idlerNames: [ L_BELT_IDLER ]
+        upAxis: [ 0, 0, 1 ]
+        <<: [ *MAIN_BELT_SPEC, *COMMON_BELT_SPEC ]
+
+  - # 右メインベルトスプロケット
+    name: R_BELT_SPROCKET
+    parent: CHASSIS
+    translation: [ -0.240, -0.09495, 0.09360 ]
+    jointType: revolute
+    jointAxis: [ 0, 1, 0 ]
+    material: GiraffeWheel
+    # AGX parameters
+    jointMotorForceRange: [ -93, 93 ] # 93 = Tg = Tm x i x 効率 (Tm:405[mNm] i:243 効率:94[%])
+    jointLockForceRange: [ -93, 93 ] # 93 = Tg = Tm x i x 効率 (Tm:405[mNm] i:243 効率:94[%])
+    elements: { <<: *COMMON_RESOURCE, node: BELT_SPROCKET, rotation: [ 1, 0, 0, 180 ] }
+
+  - # 右メインベルトアイドラ
+    name: R_BELT_IDLER
+    parent: CHASSIS
+    translation: [ 0.240, -0.09495, 0.09360 ]
+    jointType: revolute
+    jointAxis: [ 0, 1, 0 ]
+    material: GiraffeWheel
+    elements: { <<: *COMMON_RESOURCE, node: BELT_IDLER, rotation: [ 1, 0, 0, 180 ] }
+
+  - # 右メインベルトトラックローラー
+    name: R_BELT_TRACK_ROLLER
+    parent: CHASSIS
+    translation: [ 0, -0.09360, 0.02960 ]
+    jointType: fixed
+    material: GiraffeWheel
+    elements: { <<: *COMMON_RESOURCE, node: BELT_TRACK_ROLLER }
+
+  - # 右メインベルトキャリアローラー
+    name: R_BELT_CARRIER_ROLLER
+    parent: CHASSIS
+    translation: [ 0, -0.09350, 0.21790 ]
+    jointType: fixed
+    jointAxis: [ 0, 1, 0 ]
+    material: GiraffeWheel
+    elements: { <<: *COMMON_RESOURCE, node: BELT_CARRIER_ROLLER }
+
+  - # 左メインベルトスプロケット
+    name: L_BELT_SPROCKET
+    parent: CHASSIS
+    translation: [ 0.240, 0.09495, 0.09360 ]
+    jointType: revolute
+    jointAxis: [ 0, 1, 0 ]
+    material: GiraffeWheel
+    # AGX parameters
+    jointMotorForceRange: [ -93, 93 ] # 93 = Tg = Tm x i x 効率 (Tm:405[mNm] i:243 効率:94[%])
+    jointLockForceRange: [ -93, 93 ] # 93 = Tg = Tm x i x 効率 (Tm:405[mNm] i:243 効率:94[%])
+    elements: { <<: *COMMON_RESOURCE, node: BELT_SPROCKET }
+
+  - # 左メインベルトアイドラ
+    name: L_BELT_IDLER
+    parent: CHASSIS
+    translation: [ -0.240, 0.09495, 0.09360 ]
+    jointType: revolute
+    jointAxis: [ 0, 1, 0 ]
+    material: GiraffeWheel
+    elements: { <<: *COMMON_RESOURCE, node: BELT_IDLER }
+
+  - # 左メインベルトトラックローラー
+    name: L_BELT_TRACK_ROLLER
+    parent: CHASSIS
+    translation: [ 0, 0.09360, 0.02960 ]
+    jointType: fixed
+    material: GiraffeWheel
+    elements: { <<: *COMMON_RESOURCE, node: BELT_TRACK_ROLLER }
+
+  - # 左メインベルトキャリアローラー
+    name: L_BELT_CARRIER_ROLLER
+    parent: CHASSIS
+    translation: [ 0, 0.09350, 0.21790 ]
+    jointType: fixed
+    jointAxis: [ 0, 1, 0 ]
+    material: GiraffeWheel
+    elements: { <<: *COMMON_RESOURCE, node: BELT_CARRIER_ROLLER, rotation: [ 1, 0, 0, 180 ] }
+
+  - # 右前方フリッパー
+    name: FR_FLIPPER
+    parent: CHASSIS
+    translation: [ 0.240, -0.1985, 0.09360 ]
+    jointType: revolute
+    jointAxis: [ 0, -1, 0 ]
+    jointId: 0
+    jointRange: [ -180, 180 ]
+    jointVelocityRange: [ -38, 38 ]
+    # AGX parameters
+    jointMotorForceRange: [ -85, 85 ] # 85 = Tg = Tm x i x 効率 (Tm:93.3[mNm] i:1080 効率:84[%])
+    jointLockForceRange: [ -85, 85 ] # 85 = Tg = Tm x i x 効率 (Tm:93.3[mNm] i:1080 効率:84[%])
+    elements:
+      - # フリッパー
+        { <<: *COMMON_RESOURCE, node: FLIPPER }
+
+      - # 右前方サブベルト
+        type: AGXVehicleContinuousTrackDevice
+        name: FR_SUB_BELT_AGX
+        sprocketNames: [ FR_SUB_BELT_SPROCKET ]
+        rollerNames: [ FR_SUB_BELT_CARRIER_ROLLER ]
+        guideNames: [ FR_SUB_BELT_TRACK_ROLLER ]
+        idlerNames: [ FR_SUB_BELT_IDLER ]
+        upAxis: [ 0, 0, 1 ]
+        <<: [ *SUB_BELT_SPEC, *COMMON_BELT_SPEC ]
+
+  - # 右前方サブベルトスプロケット
+    name: FR_SUB_BELT_SPROCKET
+    parent: CHASSIS
+    translation: [ 0.240, -0.19850, 0.09360 ]
+    jointType: revolute
+    jointAxis: [ 0, 1, 0 ]
+    material: GiraffeWheel
+    elements: { <<: *COMMON_RESOURCE, node: SUB_BELT_SPROCKET }
+
+  - # 右前方サブベルトアイドラ
+    name: FR_SUB_BELT_IDLER
+    parent: FR_FLIPPER
+    translation: [ 0.247, 0, 0 ]
+    jointType: revolute
+    jointAxis: [ 0, 1, 0 ]
+    material: GiraffeWheel
+    elements: { <<: *COMMON_RESOURCE, node: SUB_BELT_IDLER }
+
+  - # 右前方サブベルトトラックローラー
+    name: FR_SUB_BELT_TRACK_ROLLER
+    parent: FR_FLIPPER
+    translation: [ 0.12842, 0, -0.04806 ]
+    jointType: fixed
+    material: GiraffeWheel
+    elements: { <<: *COMMON_RESOURCE, node: SUB_BELT_ROLLER, rotation: [ 0, 1, 0, -6.29 ] }
+
+  - # 右前方サブベルトキャリアローラー
+    name: FR_SUB_BELT_CARRIER_ROLLER
+    parent: FR_FLIPPER
+    translation: [ 0.12842, 0, 0.04806 ]
+    jointType: fixed
+    material: GiraffeWheel
+    elements: { <<: *COMMON_RESOURCE, node: SUB_BELT_ROLLER, rotation: [ [ 0, 1, 0, 6.29 ], [ 1, 0, 0, 180 ] ] }
+
+  - # 左前方フリッパー
+    name: FL_FLIPPER
+    parent: CHASSIS
+    translation: [ 0.240, 0.1985, 0.09360 ]
+    jointType: revolute
+    jointAxis: [ 0, -1, 0 ]
+    jointId: 1
+    jointRange: [ -180, 180 ]
+    jointVelocityRange: [ -38, 38 ]
+    # AGX parameters
+    jointMotorForceRange: [ -85, 85 ] # 85 = Tg = Tm x i x 効率 (Tm:93.3[mNm] i:1080 効率:84[%])
+    jointLockForceRange: [ -85, 85 ] # 85 = Tg = Tm x i x 効率 (Tm:93.3[mNm] i:1080 効率:84[%])
+    elements:
+      - # フリッパー
+        { <<: *COMMON_RESOURCE, node: FLIPPER, rotation: [ 1, 0, 0, 180 ] }
+
+      - # 左前方サブベルト
+        type: AGXVehicleContinuousTrackDevice
+        name: FL_SUB_BELT_AGX
+        sprocketNames: [ FL_SUB_BELT_SPROCKET ]
+        rollerNames: [ FL_SUB_BELT_CARRIER_ROLLER ]
+        guideNames: [ FL_SUB_BELT_TRACK_ROLLER ]
+        idlerNames: [ FL_SUB_BELT_IDLER ]
+        upAxis: [ 0, 0, 1 ]
+        <<: [ *SUB_BELT_SPEC, *COMMON_BELT_SPEC ]
+
+  - # 左前方サブベルトスプロケット
+    name: FL_SUB_BELT_SPROCKET
+    parent: CHASSIS
+    translation: [ 0.240, 0.19850, 0.09360 ]
+    jointType: revolute
+    jointAxis: [ 0, 1, 0 ]
+    material: GiraffeWheel
+    elements: { <<: *COMMON_RESOURCE, node: SUB_BELT_SPROCKET, rotation: [ 1, 0, 0, 180 ] }
+
+  - # 左前方サブベルトアイドラ
+    name: FL_SUB_BELT_IDLER
+    parent: FL_FLIPPER
+    translation: [ 0.247, 0, 0 ]
+    jointType: revolute
+    jointAxis: [ 0, 1, 0 ]
+    material: GiraffeWheel
+    elements: { <<: *COMMON_RESOURCE, node: SUB_BELT_IDLER, rotation: [ 1, 0, 0, 180 ] }
+
+  - # 左前方サブベルトトラックローラー
+    name: FL_SUB_BELT_TRACK_ROLLER
+    parent: FL_FLIPPER
+    translation: [ 0.12842, 0, -0.04806 ]
+    jointType: fixed
+    material: GiraffeWheel
+    elements: { <<: *COMMON_RESOURCE, node: SUB_BELT_ROLLER, rotation: [ 0, 1, 0, -6.29 ] }
+
+  - # 左前方サブベルトキャリアローラー
+    name: FL_SUB_BELT_CARRIER_ROLLER
+    parent: FL_FLIPPER
+    translation: [ 0.12842, 0, 0.04806 ]
+    jointType: fixed
+    material: GiraffeWheel
+    elements: { <<: *COMMON_RESOURCE, node: SUB_BELT_ROLLER, rotation: [ [ 0, 1, 0, 6.29 ], [ 1, 0, 0, 180 ] ] }
+
+  - # 右後方フリッパー
+    name: BR_FLIPPER
+    parent: CHASSIS
+    translation: [ -0.240, -0.1985, 0.09360 ]
+    jointType: revolute
+    jointAxis: [ 0, 1, 0 ]
+    jointId: 2
+    jointRange: [ -180, 180 ]
+    jointVelocityRange: [ -38, 38 ]
+    # AGX parameters
+    jointMotorForceRange: [ -85, 85 ] # 85 = Tg = Tm x i x 効率 (Tm:93.3[mNm] i:1080 効率:84[%])
+    jointLockForceRange: [ -85, 85 ] # 85 = Tg = Tm x i x 効率 (Tm:93.3[mNm] i:1080 効率:84[%])
+    elements:
+      - # フリッパー
+        { <<: *COMMON_RESOURCE, node: FLIPPER, rotation: [ 0, 1, 0, 180 ] }
+
+      - # 右後方サブベルト
+        type: AGXVehicleContinuousTrackDevice
+        name: BR_SUB_TRACK_AGX
+        sprocketNames: [ BR_SUB_BELT_SPROCKET ]
+        rollerNames: [ BR_SUB_BELT_CARRIER_ROLLER ]
+        guideNames: [ BR_SUB_BELT_TRACK_ROLLER ]
+        idlerNames: [ BR_SUB_BELT_IDLER ]
+        upAxis: [ 0, 0, 1 ]
+        <<: [ *SUB_BELT_SPEC, *COMMON_BELT_SPEC ]
+
+  - # 右後方サブベルトスプロケット
+    name: BR_SUB_BELT_SPROCKET
+    parent: CHASSIS
+    translation: [ -0.240, -0.19850, 0.09360 ]
+    jointType: revolute
+    jointAxis: [ 0, 1, 0 ]
+    material: GiraffeWheel
+    elements: { <<: *COMMON_RESOURCE, node: SUB_BELT_SPROCKET }
+
+  - # 右後方サブベルトアイドラ
+    name: BR_SUB_BELT_IDLER
+    parent: BR_FLIPPER
+    translation: [ -0.247, 0, 0 ]
+    jointType: revolute
+    jointAxis: [ 0, 1, 0 ]
+    material: GiraffeWheel
+    elements: { <<: *COMMON_RESOURCE, node: SUB_BELT_IDLER }
+
+  - # 右後方サブベルトトラックローラー
+    name: BR_SUB_BELT_TRACK_ROLLER
+    parent: BR_FLIPPER
+    translation: [ -0.12842, 0, -0.04806 ]
+    jointType: fixed
+    material: GiraffeWheel
+    elements: { <<: *COMMON_RESOURCE, node: SUB_BELT_ROLLER, rotation: [ 0, 1, 0, 6.29 ] }
+
+  - # 右後方サブベルトキャリアローラー
+    name: BR_SUB_BELT_CARRIER_ROLLER
+    parent: BR_FLIPPER
+    translation: [ -0.12842, 0, 0.04806 ]
+    jointType: fixed
+    material: GiraffeWheel
+    elements: { <<: *COMMON_RESOURCE, node: SUB_BELT_ROLLER, rotation: [ [ 0, 1, 0, -6.29 ], [ 1, 0, 0, 180 ] ] }
+
+  - # 左後方フリッパー
+    name: BL_FLIPPER
+    parent: CHASSIS
+    translation: [ -0.240, 0.1985, 0.09360 ]
+    jointType: revolute
+    jointAxis: [ 0, 1, 0 ]
+    jointId: 3
+    jointRange: [ -180, 180 ]
+    jointVelocityRange: [ -38, 38 ]
+    # AGX parameters
+    jointMotorForceRange: [ -85, 85 ] # 85 = Tg = Tm x i x 効率 (Tm:93.3[mNm] i:1080 効率:84[%])
+    jointLockForceRange: [ -85, 85 ] # 85 = Tg = Tm x i x 効率 (Tm:93.3[mNm] i:1080 効率:84[%])
+    elements:
+      - # フリッパー
+        { <<: *COMMON_RESOURCE, node: FLIPPER, rotation: [ [ 0, 1, 0, 180 ], [ 1, 0, 0, 180 ] ] }
+
+      - # 左後方サブベルト
+        type: AGXVehicleContinuousTrackDevice
+        name: BL_SUB_TRACK_AGX
+        sprocketNames: [ BL_SUB_BELT_SPROCKET ]
+        rollerNames: [ BL_SUB_BELT_CARRIER_ROLLER ]
+        guideNames: [ BL_SUB_BELT_TRACK_ROLLER ]
+        idlerNames: [ BL_SUB_BELT_IDLER ]
+        upAxis: [ 0, 0, 1 ]
+        <<: [ *SUB_BELT_SPEC, *COMMON_BELT_SPEC ]
+
+  - # 左後方サブベルトスプロケット
+    name: BL_SUB_BELT_SPROCKET
+    parent: CHASSIS
+    translation: [ -0.240, 0.19850, 0.09360 ]
+    jointType: revolute
+    jointAxis: [ 0, 1, 0 ]
+    material: GiraffeWheel
+    elements: { <<: *COMMON_RESOURCE, node: SUB_BELT_SPROCKET, rotation: [ 1, 0, 0, 180 ] }
+
+  - # 左後方サブベルトアイドラ
+    name: BL_SUB_BELT_IDLER
+    parent: BL_FLIPPER
+    translation: [ -0.247, 0, 0 ]
+    jointType: revolute
+    jointAxis: [ 0, 1, 0 ]
+    material: GiraffeWheel
+    elements: { <<: *COMMON_RESOURCE, node: SUB_BELT_IDLER, rotation: [ 1, 0, 0, 180 ] }
+
+  - # 左後方サブベルトトラックローラー
+    name: BL_SUB_BELT_BOTTOM_ROLLER
+    parent: BL_FLIPPER
+    translation: [ -0.12842, 0, -0.04806 ]
+    jointType: fixed
+    material: GiraffeWheel
+    elements: { <<: *COMMON_RESOURCE, node: SUB_BELT_ROLLER, rotation: [ 0, 1, 0, 6.29 ] }
+
+  - # 左後方サブベルトキャリアローラー
+    name: BL_SUB_BELT_CARRIER_ROLLER
+    parent: BL_FLIPPER
+    translation: [ -0.12842, 0, 0.04806 ]
+    jointType: fixed
+    material: GiraffeWheel
+    elements: { <<: *COMMON_RESOURCE, node: SUB_BELT_ROLLER, rotation: [ [ 0, 1, 0, -6.29 ], [ 1, 0, 0, 180 ] ] }
+
+# 干渉設定
+collisionDetection:
+  excludeTreeDepth: 1
+  excludeSelfCollisionLinks: [
+    R_BELT_SPROCKET, R_BELT_IDLER, R_BELT_TRACK_ROLLER, R_BELT_CARRIER_ROLLER,
+    L_BELT_SPROCKET, L_BELT_IDLER, L_BELT_TRACK_ROLLER, L_BELT_CARRIER_ROLLER,
+    FR_SUB_BELT_IDLER, FR_SUB_BELT_TRACK_ROLLER, FR_SUB_BELT_CARRIER_ROLLER,
+    FL_SUB_BELT_IDLER, FL_SUB_BELT_TRACK_ROLLER, FL_SUB_BELT_CARRIER_ROLLER,
+    BR_SUB_BELT_IDLER, BR_SUB_BELT_TRACK_ROLLER, BR_SUB_BELT_CARRIER_ROLLER,
+    BL_SUB_BELT_IDLER, BL_SUB_BELT_TRACK_ROLLER, BL_SUB_BELT_CARRIER_ROLLER ]
+  excludeLinkGroups:
+    -
+      name: ChassisGroup
+      links: [
+        CHASSIS,
+        FR_FLIPPER, FR_SUB_BELT_SPROCKET,
+        FL_FLIPPER, FL_SUB_BELT_SPROCKET,
+        BR_FLIPPER, BR_SUB_BELT_SPROCKET,
+        BL_FLIPPER, BL_SUB_BELT_SPROCKET ]

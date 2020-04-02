@@ -1,0 +1,215 @@
+format: ChoreonoidBody
+formatVersion: 1.0
+angleUnit: degree
+name: Giraffe
+rootLink: CHASSIS
+
+COMMON_RESOURCE: &COMMON_RESOURCE
+  type: Resource
+  uri: "resource/GiraffeCommon.yaml"
+
+links:
+  -
+    name: CHASSIS
+    translation: [ 0, 0, 0.010 ]
+    jointType: free
+    elements:
+      - # シャーシ
+        { <<: *COMMON_RESOURCE, node: CHASSIS }
+
+      - # 右メインベルトスプロケット
+        { <<: *COMMON_RESOURCE, node: BELT_SPROCKET_VISUAL, translation: [ -0.240, -0.09495, 0.09360 ], rotation: [ 1, 0, 0, 180 ] }
+
+      - # 右メインベルトアイドラ
+        { <<: *COMMON_RESOURCE, node: BELT_IDLER_VISUAL, translation: [ 0.240, -0.09495, 0.09360 ], rotation: [ 1, 0, 0, 180 ] }
+
+      - # 右メインベルトトラックローラー
+        { <<: *COMMON_RESOURCE, node: BELT_TRACK_ROLLER_VISUAL, translation: [ 0, -0.09360, 0.02960 ] }
+
+      - # 右メインベルトキャリアローラー
+        { <<: *COMMON_RESOURCE, node: BELT_CARRIER_ROLLER_VISUAL, translation: [ 0, -0.09350, 0.21790 ] }
+
+      - # 左メインベルトスプロケット
+        { <<: *COMMON_RESOURCE, node: BELT_SPROCKET_VISUAL, translation: [ 0.240, 0.09495, 0.09360 ] }
+
+      - # 左メインベルトアイドラ
+        { <<: *COMMON_RESOURCE, node: BELT_IDLER_VISUAL, translation: [ -0.240, 0.09495, 0.09360 ] }
+
+      - # 左メインベルトトラックローラー
+        { <<: *COMMON_RESOURCE, node: BELT_TRACK_ROLLER_VISUAL, translation: [ 0, 0.09360, 0.02960 ] }
+
+      - # 左メインベルトキャリアローラー
+        { <<: *COMMON_RESOURCE, node: BELT_CARRIER_ROLLER_VISUAL, translation: [ 0, 0.09350, 0.21790 ], rotation: [ 1, 0, 0, 180 ] }
+
+      - # 右前方サブベルトスプロケット
+        { <<: *COMMON_RESOURCE, node: SUB_BELT_SPROCKET_VISUAL, translation: [ 0.240, -0.19850, 0.09360 ] }
+
+      - # 左前方サブベルトスプロケット
+        { <<: *COMMON_RESOURCE, node: SUB_BELT_SPROCKET_VISUAL, translation: [ 0.240, 0.19850, 0.09360 ], rotation: [ 1, 0, 0, 180 ] }
+
+      - # 右後方サブベルトスプロケット
+        { <<: *COMMON_RESOURCE, node: SUB_BELT_SPROCKET_VISUAL, translation: [ -0.240, -0.19850, 0.09360 ] }
+
+      - # 左後方サブベルトスプロケット
+        { <<: *COMMON_RESOURCE, node: SUB_BELT_SPROCKET_VISUAL, translation: [ -0.240, 0.19850, 0.09360 ], rotation: [ 1, 0, 0, 180 ] }
+
+  - # 右メインベルト
+    name: R_BELT
+    parent: CHASSIS
+    translation: [ 0, -0.09495, 0.09360 ]
+    jointType: fixed
+    jointAxis: [ 0, 1, 0 ]
+    actuationMode: jointSurfaceVelocity
+    elements: { <<: *COMMON_RESOURCE, node: BELT }
+
+  - # 左メインベルト
+    name: L_BELT
+    parent: CHASSIS
+    translation: [ 0, 0.09495, 0.09360 ]
+    jointType: fixed
+    jointAxis: [ 0, 1, 0 ]
+    actuationMode: jointSurfaceVelocity
+    elements: { <<: *COMMON_RESOURCE, node: BELT }
+
+  - # 右前方フリッパー
+    name: FR_FLIPPER
+    parent: CHASSIS
+    translation: [ 0.240, -0.1985, 0.09360 ]
+    jointType: revolute
+    jointAxis: [ 0, -1, 0 ]
+    jointId: 0
+    jointRange: [ -180, 180 ]
+    jointVelocityRange: [ -38, 38 ]
+    gearRatio: 1080
+    elements:
+      - # フリッパー
+        { <<: *COMMON_RESOURCE, node: FLIPPER }
+
+      - # サブベルトアイドラ
+        { <<: *COMMON_RESOURCE, node: SUB_BELT_IDLER_VISUAL, translation: [ 0.247, 0, 0 ] }
+
+      - # サブベルトトラックローラー
+        { <<: *COMMON_RESOURCE, node: SUB_BELT_ROLLER_VISUAL, translation: [ 0.12842, 0, -0.04806 ], rotation: [ 0, 1, 0, -6.29 ] }
+
+      - # サブベルトキャリアローラー
+        { <<: *COMMON_RESOURCE, node: SUB_BELT_ROLLER_VISUAL, translation: [ 0.12842, 0, 0.04806 ], rotation: [ [ 0, 1, 0, 6.29 ], [ 1, 0, 0, 180 ] ] }
+
+  - # 右前方サブベルト
+    name: FR_SUB_BELT
+    parent: FR_FLIPPER
+    jointType: fixed
+    jointAxis: [ 0, 1, 0 ]
+    actuationMode: jointSurfaceVelocity
+    elements: { <<: *COMMON_RESOURCE, node: SUB_BELT }
+
+  - # 左前方フリッパー
+    name: FL_FLIPPER
+    parent: CHASSIS
+    translation: [ 0.240, 0.1985, 0.09360 ]
+    jointType: revolute
+    jointAxis: [ 0, -1, 0 ]
+    jointId: 1
+    jointRange: [ -180, 180 ]
+    jointVelocityRange: [ -38, 38 ]
+    gearRatio: 1080
+    elements:
+      - # フリッパー
+        { <<: *COMMON_RESOURCE, node: FLIPPER, rotation: [ 1, 0, 0, 180 ] }
+
+      - # サブベルトアイドラ
+        { <<: *COMMON_RESOURCE, node: SUB_BELT_IDLER_VISUAL, translation: [ 0.247, 0, 0 ], rotation: [ 1, 0, 0, 180 ] }
+
+      - # サブベルトトラックローラー
+        { <<: *COMMON_RESOURCE, node: SUB_BELT_ROLLER_VISUAL, translation: [ 0.12842, 0, -0.04806 ], rotation: [ 0, 1, 0, -6.29 ] }
+
+      - # サブベルトキャリアローラー
+        { <<: *COMMON_RESOURCE, node: SUB_BELT_ROLLER_VISUAL, translation: [ 0.12842, 0, 0.04806 ], rotation: [ [ 0, 1, 0, 6.29 ], [ 1, 0, 0, 180 ] ] }
+
+  - # 左前方サブベルト
+    name: FL_SUB_BELT
+    parent: FL_FLIPPER
+    jointType: fixed
+    jointAxis: [ 0, 1, 0 ]
+    actuationMode: jointSurfaceVelocity
+    elements: { <<: *COMMON_RESOURCE, node: SUB_BELT }
+
+  - # 右後方フリッパー
+    name: BR_FLIPPER
+    parent: CHASSIS
+    translation: [ -0.240, -0.1985, 0.09360 ]
+    jointType: revolute
+    jointAxis: [ 0, 1, 0 ]
+    jointId: 2
+    jointRange: [ -180, 180 ]
+    jointVelocityRange: [ -38, 38 ]
+    gearRatio: 1080
+    elements:
+      - # フリッパー
+        { <<: *COMMON_RESOURCE, node: FLIPPER, rotation: [ 0, 1, 0, 180 ] }
+
+      - # サブベルトアイドラ
+        { <<: *COMMON_RESOURCE, node: SUB_BELT_IDLER_VISUAL, translation: [ -0.247, 0, 0 ] }
+
+      - # サブベルトトラックローラー
+        { <<: *COMMON_RESOURCE, node: SUB_BELT_ROLLER_VISUAL, translation: [ -0.12842, 0, -0.04806 ], rotation: [ 0, 1, 0, 6.29 ] }
+
+      - # サブベルトキャリアローラー
+        { <<: *COMMON_RESOURCE, node: SUB_BELT_ROLLER_VISUAL, translation: [ -0.12842, 0, 0.04806 ], rotation: [ [ 0, 1, 0, -6.29 ], [ 1, 0, 0, 180 ] ] }
+
+  - # 右後方サブベルト
+    name: BR_SUB_BELT
+    parent: BR_FLIPPER
+    jointType: fixed
+    jointAxis: [ 0, 1, 0 ]
+    actuationMode: jointSurfaceVelocity
+    elements: { <<: *COMMON_RESOURCE, node: SUB_BELT, rotation: [ 0, 1, 0, 180 ] }
+
+  - # 左後方フリッパー
+    name: BL_FLIPPER
+    parent: CHASSIS
+    translation: [ -0.240, 0.1985, 0.09360 ]
+    jointType: revolute
+    jointAxis: [ 0, 1, 0 ]
+    jointId: 3
+    jointRange: [ -180, 180 ]
+    jointVelocityRange: [ -38, 38 ]
+    gearRatio: 1080
+    elements:
+      - # フリッパー
+        { <<: *COMMON_RESOURCE, node: FLIPPER, rotation: [ [ 0, 1, 0, 180 ], [ 1, 0, 0, 180 ] ] }
+
+      - # サブベルトアイドラ
+        { <<: *COMMON_RESOURCE, node: SUB_BELT_IDLER_VISUAL, translation: [ -0.247, 0, 0 ], rotation: [ 1, 0, 0, 180 ] }
+
+      - # サブベルトトラックローラー
+        { <<: *COMMON_RESOURCE, node: SUB_BELT_ROLLER_VISUAL, translation: [ -0.12842, 0, -0.04806 ], rotation: [ 0, 1, 0, 6.29 ] }
+
+      - # サブベルトキャリアローラー
+        { <<: *COMMON_RESOURCE, node: SUB_BELT_ROLLER_VISUAL, translation: [ -0.12842, 0, 0.04806 ], rotation: [ [ 0, 1, 0, -6.29 ], [ 1, 0, 0, 180 ] ] }
+
+  - # 左後方サブベルト
+    name: BL_SUB_BELT
+    parent: BL_FLIPPER
+    jointType: fixed
+    jointAxis: [ 0, 1, 0 ]
+    actuationMode: jointSurfaceVelocity
+    elements: { <<: *COMMON_RESOURCE, node: SUB_BELT, rotation: [ 0, 1, 0, 180 ] }
+
+# 干渉設定
+collisionDetection:
+  excludeTreeDepth: 1
+  excludeLinkGroups:
+    -
+      name: ChassisGroup
+      links: [
+        CHASSIS, R_BELT, L_BELT ]
+    -
+      name: FrontSubGroup
+      links: [
+        FR_FLIPPER, FR_SUB_BELT,
+        FL_FLIPPER, FL_SUB_BELT ]
+    -
+      name: BackSubGroup
+      links: [
+        BR_FLIPPER, BR_SUB_BELT,
+        BL_FLIPPER, BL_SUB_BELT ]

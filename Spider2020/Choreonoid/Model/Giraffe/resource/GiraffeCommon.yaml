@@ -1,0 +1,377 @@
+# シャーシ
+CHASSIS: &CHASSIS
+  RigidBody:
+    centerOfMass: [ -0.00098, -0.00518, 0.16243 ]
+    mass: 38.59738
+    inertia: [
+      0.58746749170,  0.00826731912,  -0.00360804629,
+      0.00826731912,  1.58396849434,  -0.00720496449,
+      -0.00360804629, -0.00720496449, 1.45725551866 ]
+    elements:
+      -
+        type: Visual
+        resource: { uri: "CHASSIS.wrl" }
+      -
+        type: Collision
+        elements:
+          - # ボックス(天板除く)
+            # 20191202
+            type: Transform
+            translation: [ 0, 0, 0.0936 ]
+            elements:
+              -
+                type: Shape
+                translation: [ 0.240, 0, 0 ]
+                geometry: { type: Cylinder, height: 0.132, radius: 0.075 }
+              -
+                type: Shape
+                translation: [ -0.240, 0, 0 ]
+                geometry: { type: Cylinder, height: 0.132, radius: 0.075 }
+              -
+                type: Shape
+                geometry: { type: Box, size: [ 0.480, 0.132, 0.150 ] }
+              -
+                type: Shape
+                translation: [ 0, 0, 0.1075 ]
+                geometry: { type: Box, size: [ 0.630, 0.132, 0.215 ] }
+          - # ボックス(天板)
+            # 20191202
+            type: Shape
+            translation: [ 0, 0, 0.3401 ]
+            geometry: { type: Box, size: [ 0.670, 0.220, 0.075 ] }
+          - # 右側フリッパーモータカバー
+            # 20191202
+            type: Shape
+            translation: [ 0, -0.0935, 0.1006 ]
+            geometry: { type: Box, size: [ 0.302, 0.055, 0.136 ] }
+          - # 左側フリッパーモータカバー
+            # 20191202
+            type: Shape
+            translation: [ 0, 0.0935, 0.1006 ]
+            geometry: { type: Box, size: [ 0.302, 0.055, 0.136 ] }
+          - # 右側板
+            # 20191202
+            type: Transform
+            translation: [ 0, -0.124, 0.09360 ]
+            elements: &CHASSIS_SIDE_PLATE_elements
+              -
+                type: Shape
+                translation: [ 0.240, 0, 0 ]
+                geometry: { type: Cylinder, height: 0.006, radius: 0.075 }
+              -
+                type: Shape
+                translation: [ -0.240, 0, 0 ]
+                geometry: { type: Cylinder, height: 0.006, radius: 0.075 }
+              -
+                type: Shape
+                geometry: { type: Box, size: [ 0.480, 0.006, 0.150 ] }
+          - # 左側板
+            # 20191202
+            type: Transform
+            translation: [ 0, 0.124, 0.09360 ]
+            elements: *CHASSIS_SIDE_PLATE_elements
+
+# メインベルトスプロケット (AGX)
+BELT_SPROCKET: &BELT_SPROCKET
+  - &BELT_SPROCKET_RigidBody
+    type: RigidBody
+    centerOfMass: [ -0.00005, 0.00515, 0 ]
+    mass: 0.27255
+    inertia: [
+      0.00032792162,  -0.00000005679, 0,
+      -0.00000005679, 0.00063082985,  0,
+      0,              0,              0.00032771088 ]
+  - &BELT_SPROCKET_Visual
+    type: Visual
+    resource: { uri: "BELT_SPROCKET.wrl" }
+  -
+    type: Collision
+    elements:
+      Shape:
+        geometry: { type: Cylinder, height: 0.044, radius: 0.07690 }
+
+# メインベルトスプロケット (AGX以外)
+BELT_SPROCKET_VISUAL: &BELT_SPROCKET_VISUAL
+  - { <<: *BELT_SPROCKET_RigidBody }
+  - { <<: *BELT_SPROCKET_Visual }
+
+# メインベルトアイドラ (AGX)
+BELT_IDLER: &BELT_IDLER
+  - &BELT_IDLER_RigidBody
+    type: RigidBody
+    centerOfMass: [ -0.00005, 0.00515, 0 ]
+    mass: 0.27255
+    inertia: [
+      0.00032792162,  -0.00000005679, 0,
+      -0.00000005679, 0.00063082985,  0,
+      0,              0,              0.00032771088 ]
+  - &BELT_IDLER_Visual
+    type: Visual
+    resource: { uri: "BELT_IDLER.wrl" }
+  -
+    type: Collision
+    elements:
+      Shape:
+        geometry: { type: Cylinder, height: 0.044, radius: 0.07690 }
+
+# メインベルトアイドラ (AGX以外)
+BELT_IDLER_VISUAL: &BELT_IDLER_VISUAL
+  - { <<: *BELT_IDLER_RigidBody }
+  - { <<: *BELT_IDLER_Visual }
+
+# メインベルトトラックローラー (AGX)
+BELT_TRACK_ROLLER: &BELT_TRACK_ROLLER
+  - &BELT_TRACK_ROLLER_RigidBody
+    type: RigidBody
+    centerOfMass: [ 0, 0, -0.00387 ]
+    mass: 0.08504
+    inertia: [
+      0.00000493451, 0,             0,
+      0,             0.00037533739, 0,
+      0,             0,             0.00037677102 ]
+  - &BELT_TRACK_ROLLER_Visual
+    type: Visual
+    resource: { uri: "BELT_TRACK_ROLLER.wrl" }
+  -
+    type: Collision
+    elements:
+      Shape:
+        # ベルト侵入回避のため、本来のサイズよりも40[mm]厚く作成
+#        translation: [ 0, 0, -0.0055 ]
+#        geometry: { type: Box, size: [ 0.230, 0.020, 0.017 ] }
+        translation: [ 0, 0, 0.0145 ]
+        geometry: { type: Box, size: [ 0.230, 0.044, 0.057 ] }
+
+# メインベルトトラックローラー (AGX以外)
+BELT_TRACK_ROLLER_VISUAL: &BELT_TRACK_ROLLER_VISUAL
+  - { <<: *BELT_TRACK_ROLLER_RigidBody }
+  - { <<: *BELT_TRACK_ROLLER_Visual }
+
+# メインベルトキャリアローラー (AGX)
+BELT_CARRIER_ROLLER: &BELT_CARRIER_ROLLER
+  - &BELT_CARRIER_ROLLER_RigidBody
+    type: RigidBody
+    centerOfMass: [ 0.00004, 0.00013, 0 ]
+    mass: 0.08605
+    inertia: [
+      0.00002234117,  -0.00000002229, 0,
+      -0.00000002229, 0.00004239077,  0,
+      0,              0,              0.00002231820 ]
+  - &BELT_CARRIER_ROLLER_Visual
+    type: Visual
+    resource: { uri: "BELT_CARRIER_ROLLER.wrl" }
+  -
+    type: Collision
+    elements:
+      Shape:
+        geometry: { type: Cylinder, height: 0.044, radius: 0.03317 }
+
+# メインベルトキャリアローラー (AGX以外)
+BELT_CARRIER_ROLLER_VISUAL: &BELT_CARRIER_ROLLER_VISUAL
+  - { <<: *BELT_CARRIER_ROLLER_RigidBody }
+  - { <<: *BELT_CARRIER_ROLLER_Visual }
+
+# メインベルト (AGX以外)
+BELT: &BELT
+  RigidBody:
+    centerOfMass: [ 0.00042, 0.00005, 0.01456 ]
+    mass: 1.46321
+    inertia: [
+      0.01432465786,  -0.00000002462, -0.00001183578,
+      -0.00000002462, 0.07536491108,  -0.00000000092,
+      -0.00001183578, -0.00000000092, 0.06140856635 ]
+    elements:
+      Visual: { resource: { uri: "BELT.wrl" } }
+      Collision:
+        elements:
+          -
+            type: Shape
+            translation: [ 0.240, 0, 0 ]
+            geometry: { type: Cylinder, height: 0.044, radius: 0.09654 }
+          -
+            type: Shape
+            translation: [ -0.240, 0, 0 ]
+            geometry: { type: Cylinder, height: 0.044, radius: 0.09654 }
+          -
+            type: Shape
+            translation: [ -0.18146, 0, -0.02512 ]
+            rotation: [ 0, 1, 0, 3.46 ]
+            geometry: { type: Box, size: [ 0.11990, 0.044, 0.150 ] }
+          -
+            type: Shape
+            translation: [ 0.18146, 0, -0.02512 ]
+            rotation: [ 0, 1, 0, -3.46 ]
+            geometry: { type: Box, size: [ 0.11990, 0.044, 0.150 ] }
+          -
+            type: Shape
+            translation: [ -0.18075, 0, -0.00260 ]
+            rotation: [ 0, 1, 0, 2.51 ]
+            geometry: { type: Box, size: [ 0.11861, 0.044, 0.150 ] }
+          -
+            type: Shape
+            translation: [ 0, 0, -0.02860 ]
+            geometry: { type: Box, size: [ 0.25231, 0.044, 0.150 ] }
+          -
+            type: Shape
+            translation: [ -0.12005, 0, 0.06214 ]
+            rotation: [ 0, 1, 0, -18.22 ]
+            geometry: { type: Box, size: [ 0.26673, 0.044, 0.150 ] }
+          -
+            type: Shape
+            translation: [ 0.12005, 0, 0.06214 ]
+            rotation: [ 0, 1, 0, 18.22 ]
+            geometry: { type: Box, size: [ 0.26673, 0.044, 0.150 ] }
+          -
+            type: Shape
+            translation: [ 0, 0, 0.124 ]
+            geometry: { type: Cylinder, height: 0.044, radius: 0.05377 }
+
+# フリッパー
+FLIPPER: &FLIPPER
+  RigidBody:
+    centerOfMass: [ 0.06539, 0.01229, 0 ]
+    mass: 1.43705
+    inertia: [
+      0.00217261988,  -0.00116818742, 0,
+      -0.00116818742, 0.01190424848,  0,
+      0,              0,              0.01191192474 ]
+    elements:
+      Visual: { resource: { uri: "FLIPPER.wrl" } }
+      Collision:
+        elements:
+          - # 外側プレート
+            type: Transform
+            translation: [ 0, -0.022, 0 ]
+            elements: &FLIPPER_PLATE_elements
+              -
+                type: Shape
+                translation: [ 0.255, 0, 0 ]
+                geometry: { type: Cylinder, height: 0.006, radius: 0.025 }
+              -
+                type: Shape
+                geometry: { type: Cylinder, height: 0.006, radius: 0.060 }
+              -
+                type: Shape
+                translation: [ 0.130, 0, 0 ]
+                geometry: { type: Box, size: [ 0.260, 0.006, 0.040 ] }
+              -
+                type: Shape
+                translation: [ 0.12653, 0, -0.02226 ]
+                rotation: [ 0, 1, 0, -7.63 ]
+                geometry: { type: Box, size: [ 0.2608, 0.006, 0.040 ] }
+              -
+                type: Shape
+                translation: [ 0.12653, 0, 0.02226 ]
+                rotation: [ 0, 1, 0, 7.63 ]
+                geometry: { type: Box, size: [ 0.2608, 0.006, 0.040 ] }
+          - # 内側プレート
+            type: Transform
+            translation: [ 0, 0.022, 0 ]
+            elements: *FLIPPER_PLATE_elements
+
+# サブベルトスプロケット (AGX)
+SUB_BELT_SPROCKET: &SUB_BELT_SPROCKET
+  - &SUB_BELT_SPROCKET_RigidBody
+    type: RigidBody
+    centerOfMass: [ -0.00004, 0.00616, 0 ]
+    mass: 0.29767
+    inertia: [
+      0.00036923861,  -0.00000004841, 0,
+      -0.00000004841, 0.00071022139,  0,
+      0,              0,              0.00036903545 ]
+  - &SUB_BELT_SPROCKET_Visual
+    type: Visual
+    resource: { uri: "SUB_BELT_SPROCKET.wrl" }
+  -
+    type: Collision
+    elements:
+      Shape:
+        geometry: { type: Cylinder, height: 0.044, radius: 0.07690 }
+
+# サブベルトスプロケット (AGX以外)
+SUB_BELT_SPROCKET_VISUAL: &SUB_BELT_SPROCKET_VISUAL
+  - { <<: *SUB_BELT_SPROCKET_RigidBody }
+  - { <<: *SUB_BELT_SPROCKET_Visual }
+
+# サブベルトアイドラ (AGX)
+SUB_BELT_IDLER: &SUB_BELT_IDLER
+  - &SUB_BELT_IDLER_RigidBody
+    type: RigidBody
+    centerOfMass: [ 0, 0.00371, 0 ]
+    mass: 0.09784
+    inertia: [
+      0.00004973031, 0,             0,
+      0,             0.00009405651, 0,
+      0,             0,             0.00004973031 ]
+  - &SUB_BELT_IDLER_Visual
+    type: Visual
+    resource: { uri: "SUB_BELT_IDLER.wrl" }
+  -
+    type: Collision
+    elements:
+      Shape:
+        geometry: { type: Cylinder, height: 0.044, radius: 0.04823 }
+
+# サブベルトアイドラ (AGX以外)
+SUB_BELT_IDLER_VISUAL: &SUB_BELT_IDLER_VISUAL
+  - { <<: *SUB_BELT_IDLER_RigidBody }
+  - { <<: *SUB_BELT_IDLER_Visual }
+
+# サブベルトローラー (AGX)
+SUB_BELT_ROLLER: &SUB_BELT_ROLLER
+  - &SUB_BELT_ROLLER_RigidBody
+    type: RigidBody
+    centerOfMass: [ 0, 0, -0.00387 ]
+    mass: 0.03326
+    inertia: [
+      0.00000193011, 0,             0,
+      0,             0.00002249608, 0,
+      0,             0,             0.00002305776 ]
+  - &SUB_BELT_ROLLER_Visual
+    type: Visual
+    resource: { uri: "SUB_BELT_ROLLER.wrl" }
+  -
+    type: Collision
+    elements:
+      Shape:
+        # ベルト侵入回避のため、本来のサイズよりも40[mm]厚く作成
+#        translation: [ 0, 0, -0.0055 ]
+#        geometry: { type: Box, size: [ 0.090, 0.044, 0.017 ] }
+        translation: [ 0, 0, 0.0145 ]
+        geometry: { type: Box, size: [ 0.090, 0.044, 0.057 ] }
+
+# サブベルトローラー (AGX以外)
+SUB_BELT_ROLLER_VISUAL: &SUB_BELT_ROLLER_VISUAL
+  - { <<: *SUB_BELT_ROLLER_RigidBody }
+  - { <<: *SUB_BELT_ROLLER_Visual }
+
+# サブベルト (AGX以外)
+SUB_BELT: &SUB_BELT
+  RigidBody:
+    centerOfMass: [ 0.10336, -0.00024, 0.00028 ]
+    mass: 0.73259
+    inertia: [
+      0.00341688633,  -0.00000389518, -0.00000430265,
+      -0.00000389518, 0.01504633341,  0.00000330789,
+      -0.00000430265, 0.00000330789,  0.01182624695 ]
+    elements:
+      Visual: { resource: { uri: "SUB_BELT.wrl" } }
+      Collision:
+        elements:
+          -
+            type: Shape
+            geometry: { type: Cylinder, height: 0.044, radius: 0.09654 }
+          -
+            type: Shape
+            translation: [ 0.247, 0, 0 ]
+            geometry: { type: Cylinder, height: 0.044, radius: 0.06949 }
+          -
+            type: Shape
+            translation: [ 0.12730, 0, 0.03453 ]
+            rotation: [ 0, 1, 0, 6.29 ]
+            geometry: { type: Box, size: [ 0.24551, 0.044, 0.09654 ] }
+          -
+            type: Shape
+            translation: [ 0.12730, 0, -0.03453 ]
+            rotation: [ 0, 1, 0, -6.29 ]
+            geometry: { type: Box, size: [ 0.24551, 0.044, 0.09654 ] }
