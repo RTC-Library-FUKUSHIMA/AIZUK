@@ -1,0 +1,140 @@
+﻿RTC_Spider2020_Motion - 日本語
+=======================
+
+
+はじめに
+========
+
+クラスについては、 `APIドキュメンテーション`_ に参照してください。
+
+.. _`APIドキュメンテーション`:
+   doxygen/html/index.html
+
+条件
+====
+
+RTC_Spider2020_MotionはOpenRTM-aist 1.0.0以上のC++版が必要です。
+
+RTC_Spider2020_Motionは CMake_ を使います。CMake 2.8以上が必要です。
+
+.. _CMAke:
+   http://www.cmake.org
+
+インストール
+============
+
+インストーラ
+------------
+
+Windowsのユーザはインストーラパッケージを使用してコンポーネントをインストール
+することができます。これはコンポーネント及びそのすべての必要なライブラリを
+インストールします。Windowsでインストールする場合、インストーラの使用を推奨してます。
+
+- インストーラをダウンロードしてください。
+- インストールを始めるためにインストーラをダブルクリックしてください。
+- 指示にしたがってコンポーネントをインストールしてください。
+- 環境変数の変更を適用するため、コンポーネントを使用する前にコンピューターを
+  再起動する必要があるかもしれません。
+
+RTC_Spider2020_Motionは ``RTC_Spider2020_MotionComp`` の実行をダブルクリックして実行することが
+できます。あるいは、 ``RTC_Spider2020_Motion`` を初期化関数の ``RTC_Spider2020_MotionInit`` を利用して、
+マネージャにロードすることができます。
+
+ソースから
+----------
+
+ソースを使う場合は以下の手順でインストールしてください。
+
+- ソースをダウンロードして解凍してください::
+
+    tar -xvzf RTC_Spider2020_Motion-2.0.0.tar.gz
+
+- 解凍されたフォルダに入ってください::
+
+    cd RTC_Spider2020_Motion-2.0.0
+
+- ``build`` フォルダを作ってください::
+
+    mkdir build
+
+- `` build`` フォルダに入ってください::
+
+    cd build
+
+- CMakeを実行してください::
+
+    cmake ../
+
+- エラーが出無い場合、makeを実行してください::
+
+    make
+
+- ``make install`` でコンポーネントをインストールしてください。選択された
+  インストール場所に書き込み権限があるかを確認してください::
+
+  ``make install``
+
+- インストールする場所はccmakeを実行して ``CMAKE_INSTALL_PREFIX`` を
+  設定することで変更が可能です。
+
+    ccmake ../
+
+ここまでで、コンポーネントが使えるようになりました。コンフィグレーションは次のセクションを
+参照してください。
+
+RTC_Spider2020_Motionは ``RTC_Spider2020_MotionComp`` を実行（ ``${prefix}/components/bin`` に
+インストールされます）することでスタンドアローンモードで実行することができます。
+あるいは、 ``libRTC_Spider2020_Motion.so`` を初期化関数の ``RTC_Spider2020_MotionInit`` を利用して、
+マネージャにロードすることができます。このライブラリは ``${prefix}/components/lib``
+または ``${prefix}/components/lib64`` にインストールされます。
+
+
+コンフィグレーション
+====================
+
+使えるコンフィグレーションパラメータは以下のテーブルを参照
+してください。
+
+================ ================== ================ ====
+パラメータ       データ型           デフォルト値     意味
+================ ================== ================ ====
+VELOCITY_GAIN    double             0.15
+OMEGA_GAIN       double             0.785
+FAILSAFE_SEC     double             1.0              入力ポートへ指定時間以上新しい入力がなければ、<br/>暴走を回避するため入力データのクリアなどを実施する。
+================ ================== ================ ====
+
+ポート
+======
+
+コンポーネントによって提供されるポートは以下のテーブルで述べられています。
+
+=============== =========== ============================== ====
+ポート名        ポート型    データ型                       意味
+=============== =========== ============================== ====
+Axis_In         InPort      RTC::TimedDoubleSeq            DualShock4コントローラの軸キーの入力具合
+Button_In       InPort      RTC::TimedULong                DualShock4コントローラのボタンの押下状態
+Mode_Out        OutPort     RTC::TimedLongSeq              動作指令の状態
+Velocity2D_Out  OutPort     RTC::TimedVelocity2D           ２次元の速度
+FlipperPwm_Out  OutPort     RTC::TimedLongSeq              フリッパーのPWM指令
+ResetIMU_Out    OutPort     RTC::TimedLong                 IMUのフィルタリセット指令
+Arm1PoseDelta_Out OutPort     RTC::TimedPose3D               Jaco2アーム（１本目）の手先位置姿勢の変位速度
+Arm1FingerDelta_Out OutPort     RTC::TimedLongSeq              Jaco2アーム（１本目）の指の開閉具合の変位速度
+Arm1Home_Out    OutPort     RTC::TimedLong                 Jaco2アーム（１本目）の初期姿勢遷移指令
+=============== =========== ============================== ====
+
+例
+==
+
+例のrtc.confファイルは ``${prefix}/components/share/RTC_Spider2020_Motion/examples/conf/``
+フォルダにインストールされています。
+
+Changelog
+=========
+
+
+License
+=======
+
+このソフトウェアは産業技術総合研究所で開発されています。承認番号はH23PRO-????
+です。このソフトウェアは Lesser General Public License (LGPL) ライセンスとして
+公開されてます。COPYING.LESSER を参照してください。

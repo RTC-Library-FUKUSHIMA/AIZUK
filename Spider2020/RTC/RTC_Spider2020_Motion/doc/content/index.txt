@@ -1,0 +1,151 @@
+﻿RTC_Spider2020_MotionName - English
+========================
+
+.. toctree::
+   :hidden:
+
+   index_j
+
+
+Introduction
+============
+
+
+For a full list of classes and functions, see the `API documentation`_.
+
+.. _`API Documentation`:
+   doxygen/html/index.html
+
+Requirements
+============
+
+RTC_Spider2020_Motion uses the `CMake build system`. You will need at least version
+2.8 to be able to build the component.
+
+.. _`CMAke build system`:
+   http://www.cmake.org
+
+
+Installation
+============
+
+Binary
+------
+
+Users of Windows can install the component using the binary installer. This
+will install the component and all its necessary dependencies. It is the
+recommended method of installation in Windows.
+
+- Download the installer from the website.
+- Double-click the executable file to begin installation.
+- Follow the instructions to install the component.
+- You may need to restart your computer for environment variable changes
+  to take effect before using the component.
+
+The component can be launched by double-clicking the
+``RTC_Spider2020_MotionComp`` executable. The ``RTC_Spider2020_Motion`` library
+is available for loading into a manager, using the initialisation function
+``RTC_Spider2020_MotionInit``.
+
+From source
+-----------
+
+Follow these steps to install RTC_Spider2020_Motion from source in any operating
+system:
+
+- Download the source, either from the repository or a source archive,
+  and extract it somewhere::
+
+    tar -xvzf RTC_Spider2020_Motion-2.0.0.tar.gz
+
+- Change to the directory containing the extracted source::
+
+    cd RTC_Spider2020_Motion-2.0.0
+
+- Create a directory called ``build``::
+
+    mkdir build
+
+- Change to that directory::
+
+    cd build
+
+- Run cmake or cmake-gui::
+
+    cmake ../
+
+- If no errors occurred, run make::
+
+    make
+
+- Finally, install the component. Ensure the necessary permissions to
+  install into the chosen prefix are available::
+
+    make install
+
+- The install destination can be changed by executing ccmake and changing
+  the variable ``CMAKE_INSTALL_PREFIX``::
+
+    ccmake ../
+
+The component is now ready for use. See the next section for instructions on
+configuring the component.
+
+RTC_Spider2020_Motion can be launched in stand-alone mode by executing the
+``RTC_Spider2020_MotionComp`` executable (installed into ``${prefix}/components/bin``).
+Alternatively, ``libRTC_Spider2020_Motion.so`` can be loaded into a manager, using the
+initialisation function ``RTC_Spider2020_MotionInit``. This shared object can be found in
+``${prefix}/components/lib`` or ``${prefix}/components/lib64``.
+
+
+Configuration
+=============
+
+The available configuration parameters are described below:
+
+================ ================== ================ ======
+Parameter        Data type          Default Value    Effect
+================ ================== ================ ======
+VELOCITY_GAIN    double             0.15             
+OMEGA_GAIN       double             0.785             
+FAILSAFE_SEC     double             1.0              入力ポートへ指定時間以上新しい入力がなければ、<br/>暴走を回避するため入力データのクリアなどを実施する。
+================ ================== ================ ======
+
+Ports
+=====
+
+The ports provided by the component are described below:
+
+=============== =========== ============================== =======
+Name            Type        Data type                      Purpose
+=============== =========== ============================== =======
+Axis_In         InPort      RTC::TimedDoubleSeq            DualShock4コントローラの軸キーの入力具合
+Button_In       InPort      RTC::TimedULong                DualShock4コントローラのボタンの押下状態
+Mode_Out        OutPort     RTC::TimedLongSeq              動作指令の状態
+Velocity2D_Out  OutPort     RTC::TimedVelocity2D           ２次元の速度
+FlipperPwm_Out  OutPort     RTC::TimedLongSeq              フリッパーのPWM指令
+ResetIMU_Out    OutPort     RTC::TimedLong                 IMUのフィルタリセット指令
+Arm1PoseDelta_Out OutPort     RTC::TimedPose3D               Jaco2アーム（１本目）の手先位置姿勢の変位速度
+Arm1FingerDelta_Out OutPort     RTC::TimedLongSeq              Jaco2アーム（１本目）の指の開閉具合の変位速度
+Arm1Home_Out    OutPort     RTC::TimedLong                 Jaco2アーム（１本目）の初期姿勢遷移指令
+=============== =========== ============================== =======
+
+Examples
+========
+
+An example configuration file is provided in the
+``${prefix}/components/share/RTC_Spider2020_Motion/examples/conf/`` directory.
+
+Changelog
+=========
+
+
+
+License
+=======
+
+This software is developed at the National Institute of Advanced
+Industrial Science and Technology. Approval number H23PRO-????. This
+software is licensed under the Lesser General Public License. See
+COPYING.LESSER.
+
