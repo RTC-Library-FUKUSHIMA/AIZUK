@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<rtc:RtcProfile rtc:version="0.2" rtc:id="RTC:AIZUK:Controller:RTC_Spider2020_Crawler_Preview:1.0.0" xmlns:rtc="http://www.openrtp.org/namespaces/rtc" xmlns:rtcExt="http://www.openrtp.org/namespaces/rtc_ext" xmlns:rtcDoc="http://www.openrtp.org/namespaces/rtc_doc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <rtc:BasicInfo xsi:type="rtcExt:basic_info_ext" rtcExt:saveProject="RTC_Spider2020_Crawler_Preview" rtc:updateDate="2019-12-23T15:22:14+09:00" rtc:creationDate="2019-12-23T15:22:14+09:00" rtc:version="1.0.0" rtc:vendor="AIZUK" rtc:maxInstances="1" rtc:executionType="PeriodicExecutionContext" rtc:executionRate="200.0" rtc:description="Spider2020 コレオノイドモデルの台車プレビューRTC" rtc:category="Controller" rtc:componentKind="DataFlowComponent" rtc:activityType="PERIODIC" rtc:componentType="STATIC" rtc:name="RTC_Spider2020_Crawler_Preview">
+        <rtcExt:VersionUpLogs></rtcExt:VersionUpLogs>
+    </rtc:BasicInfo>
+    <rtc:Actions>
+        <rtc:OnInitialize xsi:type="rtcDoc:action_status_doc" rtc:implemented="true"/>
+        <rtc:OnFinalize xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnStartup xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnShutdown xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnActivated xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnDeactivated xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnAborting xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnError xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnReset xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnExecute xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnStateUpdate xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnRateChanged xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnAction xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+        <rtc:OnModeChanged xsi:type="rtcDoc:action_status_doc" rtc:implemented="false"/>
+    </rtc:Actions>
+    <rtc:ConfigurationSet>
+        <rtc:Configuration xsi:type="rtcExt:configuration_ext" rtcExt:variableName="" rtc:unit="[m]" rtc:defaultValue="0.0081" rtc:type="double" rtc:name="CHASSIS_Z">
+            <rtcDoc:Doc rtcDoc:constraint="" rtcDoc:range="" rtcDoc:unit="[m]" rtcDoc:description="シャーシのZ座標" rtcDoc:defaultValue="0.0081" rtcDoc:dataname="Z座標"/>
+            <rtcExt:Properties rtcExt:value="text" rtcExt:name="__widget__"/>
+        </rtc:Configuration>
+    </rtc:ConfigurationSet>
+    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtcExt:position="LEFT" rtcExt:variableName="" rtc:unit="" rtc:subscriptionType="" rtc:dataflowType="" rtc:interfaceType="" rtc:idlFile="/usr/local/include/openrtm-1.2/rtm/idl/ExtendedDataTypes.idl" rtc:type="RTC::TimedPose3D" rtc:name="Pose3D_In" rtc:portType="DataInPort">
+        <rtcDoc:Doc rtcDoc:operation="" rtcDoc:occerrence="" rtcDoc:unit="[m,rad]" rtcDoc:semantics="" rtcDoc:number="1" rtcDoc:type="TimedPose3D" rtcDoc:description="３次元の位置・姿勢"/>
+    </rtc:DataPorts>
+    <rtc:DataPorts xsi:type="rtcExt:dataport_ext" rtcExt:position="LEFT" rtcExt:variableName="" rtc:unit="" rtc:subscriptionType="" rtc:dataflowType="" rtc:interfaceType="" rtc:idlFile="/usr/local/include/openrtm-1.2/rtm/idl/BasicDataType.idl" rtc:type="RTC::TimedDoubleSeq" rtc:name="FlipperAngle_In" rtc:portType="DataInPort">
+        <rtcDoc:Doc rtcDoc:operation="" rtcDoc:occerrence="" rtcDoc:unit="[rad]" rtcDoc:semantics="[0]: 右前方フリッパー&lt;br/&gt;[1]: 左前方フリッパー&lt;br/&gt;[2]: 右後方フリッパー&lt;br/&gt;[3]: 左後方フリッパー" rtcDoc:number="4" rtcDoc:type="TimedDoubleSeq" rtcDoc:description="フリッパーの角度"/>
+    </rtc:DataPorts>
+    <rtc:Language xsi:type="rtcExt:language_ext" rtc:kind="C++">
+        <rtcExt:targets rtcExt:os="Ubuntu" rtcExt:langVersion="18.04">
+            <rtcExt:libraries rtcExt:other="" rtcExt:version="1.2.1" rtcExt:name="OpenRTM-aist(C++)"/>
+        </rtcExt:targets>
+    </rtc:Language>
+</rtc:RtcProfile>
