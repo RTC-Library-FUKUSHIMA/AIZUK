@@ -11,7 +11,7 @@
 
 #define FINGER_ANGLE_MIN		(radian(0.0))
 #define FINGER_ANGLE_MAX		(radian(80.0))
-#define FINGER_UNIT_TO_ANGLE(x)	(radian((FINGER_ANGLE_MAX/6800.0)*(x)))
+#define FINGER_UNIT_TO_ANGLE(x)	((FINGER_ANGLE_MAX/6800.0)*(x))
 #define FINGER_ANGLE_ADJUST(x)	\
 	((x) < FINGER_ANGLE_MIN) ? FINGER_ANGLE_MIN : \
 	((FINGER_ANGLE_MAX < (x)) ? FINGER_ANGLE_MAX : (x) )
